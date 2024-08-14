@@ -15,7 +15,6 @@
     "preinstall": "node ./scripts/preinstall.js"
   },
   "dependencies": {
-    "element-plus": "^2.8.0",
     "vue": "^3.4.35"
   },
   "devDependencies": {

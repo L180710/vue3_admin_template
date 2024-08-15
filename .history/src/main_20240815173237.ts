@@ -11,9 +11,5 @@ const app = createApp(App)
 app.use(ElementPlus, {
   locale: zhCn, // element-plus 国际化配置
 })
-
-console.log('--')
-console.log(import.meta.env)
-
 // 将应用挂载到挂载点上
 app.mount('#app')

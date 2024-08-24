@@ -63,9 +63,6 @@
         type: 'error',
         message: error.message
       })
-    } finally {
-      // 登录失败加载效果消失
-      loading.value = false;
     }
   }
 </script>

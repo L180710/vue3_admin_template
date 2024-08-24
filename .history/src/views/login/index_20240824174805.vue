@@ -13,7 +13,7 @@
             <el-input type="password" :prefix-icon="Lock" show-password v-model="loginForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="loading" class="login_btn" type="primary" size="default" @click="login">登录</el-button>
+            <el-button :loading="true" class="login_btn" type="primary" size="default" @click="login">登录</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -40,9 +40,6 @@
 
   // 登录按钮回调
   const login = async () => {
-    // 加载效果：开始加载
-    loading.value = true;
-
     // 点击登录按钮以后干什么
     // 通知仓库发登录请求
     // 请求成功 -> 首页展示数据的地方
@@ -63,9 +60,6 @@
         type: 'error',
         message: error.message
       })
-    } finally {
-      // 登录失败加载效果消失
-      loading.value = false;
     }
   }
 </script>

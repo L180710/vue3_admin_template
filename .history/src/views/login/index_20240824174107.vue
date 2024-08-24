@@ -13,7 +13,7 @@
             <el-input type="password" :prefix-icon="Lock" show-password v-model="loginForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="loading" class="login_btn" type="primary" size="default" @click="login">登录</el-button>
+            <el-button class="login_btn" type="primary" size="default" @click="login">登录</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -23,15 +23,15 @@
 
 <script setup lang='ts'>
   import { User, Lock } from "@element-plus/icons-vue";
-  import { reactive, ref } from "vue";
+  import { reactive } from "vue";
   import { useRouter } from 'vue-router';
-  import { ElNotification } from 'element-plus';
   // 引入用户相关的小仓库
   import useUserStore from '@/store/modules/user';
   let useStore = useUserStore();
+
   // 获取路由器
-  let loading = ref(false);
   let $router = useRouter();
+
   // 收集账号与密码
   let loginForm = reactive({
     username: 'admin',
@@ -40,9 +40,6 @@
 
   // 登录按钮回调
   const login = async () => {
-    // 加载效果：开始加载
-    loading.value = true;
-
     // 点击登录按钮以后干什么
     // 通知仓库发登录请求
     // 请求成功 -> 首页展示数据的地方
@@ -50,23 +47,7 @@
     try {
       // 保证登录成功
       await useStore.userLogin(loginForm);
-      // 编程式导航到展示数据首页
-      $router.push('/');
-      // 登录成功提示信息
-      ElNotification({
-        type: 'success',
-        message: '登录成功'
-      });
-    } catch (error) {
-      // 登录失败提示信息
-      ElNotification({
-        type: 'error',
-        message: error.message
-      })
-    } finally {
-      // 登录失败加载效果消失
-      loading.value = false;
-    }
+    } catch (error) { }
   }
 </script>
 

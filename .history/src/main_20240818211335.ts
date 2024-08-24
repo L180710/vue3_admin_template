@@ -24,8 +24,6 @@ app.use(ElementPlus, {
 })
 // 安装自定义插件
 app.use(globalComponent)
-// 安装仓库
-app.use(pinia)
 // 注册模版路由
 app.use(router)
 // 将应用挂载到挂载点上

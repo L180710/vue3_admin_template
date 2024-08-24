@@ -58,14 +58,13 @@
         message: '登录成功'
       });
     } catch (error) {
+      // 登录失败加载效果消失
+      loading.value = false;
       // 登录失败提示信息
       ElNotification({
         type: 'error',
         message: error.message
       })
-    } finally {
-      // 登录失败加载效果消失
-      loading.value = false;
     }
   }
 </script>

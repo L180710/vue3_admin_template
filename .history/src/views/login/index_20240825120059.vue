@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
+        <el-form class="login_form" :model="loginForm" :rules="rules">
           <h1>Hello</h1>
           <h2>欢迎来到硅谷甄选</h2>
           <el-form-item prop="username">
@@ -31,8 +31,6 @@
   // 引入用户相关的小仓库
   import useUserStore from '@/store/modules/user';
   let useStore = useUserStore();
-  // 获取 loginForms 组件
-  let loginForms = ref('loginForm');
   // 获取路由器
   let loading = ref(false);
   let $router = useRouter();
@@ -43,9 +41,6 @@
   });
   // 登录按钮回调
   const login = async () => {
-    // 保证全部表单项校验通过再发请求
-    await loginForms.value.validate();
-
     // 加载效果：开始加载
     loading.value = true;
 
@@ -75,34 +70,17 @@
       loading.value = false;
     }
   }
-
-  // 自定义校验规则函数
-  const validatorUserName = (rule: any, value: string, callback: any) => {
-    if (value.length >= 5) {
-      callback();
-    } else {
-      callback(new Error('账号长度至少 5 位'));
-    }
-  }
-
-  const validatorPassword = (rule: any, value: string, callback: any) => {
-    if (value.length >= 6) {
-      callback();
-    } else {
-      callback(new Error('密码长度至少 6 位'));
-    }
-  }
-
   // 定义表单校验需要配置对象
   const rules = {
-    username: [
-      // { required: true, min: 6, max: 10, message: '账号长度至少六位', trigger: 'change' }
-      { trigger: 'change', validator: validatorUserName }
-    ],
-    password: [
-      // { required: true, min: 6, max: 15, message: '密码长度至少六位', trigger: 'change' }
-      { trigger: 'change', validator: validatorPassword }
-    ]
+    username: [{
+      required: true,
+      message: '用户名不能为空',
+      trigger: 'blur'
+    },
+    {
+      required: true, min: 6
+    }],
+    password: []
   }
 
 </script>

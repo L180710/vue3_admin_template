@@ -10,6 +10,7 @@ export const constantRoute = [
     path: '/',
     // component: () => import('@/views/home/index.vue'),
     component: () => import('@/views/login/index.vue'),
+
     name: 'layout',
   },
   {

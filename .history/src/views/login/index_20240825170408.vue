@@ -78,7 +78,7 @@
 
   // 自定义校验规则函数
   const validatorUserName = (rule: any, value: string, callback: any) => {
-    if (value.length >= 5) {
+    if (value.length <= 5) {
       callback();
     } else {
       callback(new Error('账号长度至少 5 位'));
@@ -86,7 +86,7 @@
   }
 
   const validatorPassword = (rule: any, value: string, callback: any) => {
-    if (value.length >= 6) {
+    if (value.length <= 5) {
       callback();
     } else {
       callback(new Error('密码长度至少 6 位'));

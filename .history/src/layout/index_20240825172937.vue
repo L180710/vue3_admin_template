@@ -1,0 +1,17 @@
+<template>
+  <div class="layout_container">
+    <!-- 左侧菜单 -->
+    <div class="layout_slider">qw</div>
+    <!-- 顶部导航 -->
+    <div class="layout_tabbar">w</div>
+    <!-- 内容展示区域 -->
+    <div class="layout_main">www</div>
+  </div>
+</template>
+
+<script setup lang='ts'>
+
+</script>
+
+<style scoped lang='scss'>
+d</style>

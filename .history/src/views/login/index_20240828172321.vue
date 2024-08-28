@@ -60,24 +60,24 @@ const login = async () => {
     await useStore.userLogin(loginForm);
     // 编程式导航到展示数据首页
     // 判断登录的时候，路由路径中是否有 query 参数，如果有就往 query 参数跳转，没有跳转到首页
-    let redirect: any = $route.query.redirect;
-    $router.push({ path: redirect || '/' });
-    // 登录成功提示信息
-    ElNotification({
-      title: `HI，${getTime()}好`,
-      type: 'success',
-      message: '欢迎回来',
-    });
-  } catch (error) {
-    // 登录失败提示信息
-    ElNotification({
-      type: 'error',
-      message: error.message
-    })
-  } finally {
-    // 登录失败加载效果消失
-    loading.value = false;
-  }
+    let redirect = $route.query.redirect;
+    $router.push({ path: redirect || \/});
+  // 登录成功提示信息
+  ElNotification({
+    title: `HI，${getTime()}好`,
+    type: 'success',
+    message: '欢迎回来',
+  });
+} catch (error) {
+  // 登录失败提示信息
+  ElNotification({
+    type: 'error',
+    message: error.message
+  })
+} finally {
+  // 登录失败加载效果消失
+  loading.value = false;
+}
 }
 
 // 自定义校验规则函数

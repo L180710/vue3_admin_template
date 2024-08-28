@@ -60,7 +60,7 @@ const login = async () => {
     await useStore.userLogin(loginForm);
     // 编程式导航到展示数据首页
     // 判断登录的时候，路由路径中是否有 query 参数，如果有就往 query 参数跳转，没有跳转到首页
-    let redirect: any = $route.query.redirect;
+    let redirect = $route.query.redirect;
     $router.push({ path: redirect || '/' });
     // 登录成功提示信息
     ElNotification({

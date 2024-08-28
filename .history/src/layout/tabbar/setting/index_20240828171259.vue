@@ -23,7 +23,7 @@ export default {
 }
 </script>
 <script setup lang='ts'>
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 // 获取用户相关小仓库
 import useUserStore from '@/store/modules/user';
 // 获取骨架的小仓库
@@ -32,8 +32,6 @@ let LayOutSettingStore = useLayOutSettingStore();
 let userStore = useUserStore();
 // 获取路由器对象
 let $router = useRouter();
-// 获取路由对象
-let $route = useRoute();
 // 刷新按钮点击回调
 const updateRefresh = () => {
   LayOutSettingStore.refresh = !LayOutSettingStore.refresh;
@@ -57,7 +55,7 @@ const logout = () => {
   // 第二件事：仓库当中关于用于相关的数据清空[token / username / avatar]
   // 第三件事：跳转到登录页面
   userStore.userLogout();
-  $router.push({ path: '/login', query: { redirect: $route.path } });
+  $router.push({ path: '/login' });
 }
 </script>
 

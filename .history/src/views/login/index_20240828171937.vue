@@ -33,11 +33,9 @@ import useUserStore from '@/store/modules/user';
 let useStore = useUserStore();
 // 获取 loginForms 组件
 let loginForms = ref('loginForm');
-let loading = ref(false);
 // 获取路由器
+let loading = ref(false);
 let $router = useRouter();
-// 获取路由对象
-let $route = useRoute();
 // 收集账号与密码
 let loginForm = reactive({
   username: 'admin',
@@ -59,9 +57,7 @@ const login = async () => {
     // 保证登录成功
     await useStore.userLogin(loginForm);
     // 编程式导航到展示数据首页
-    // 判断登录的时候，路由路径中是否有 query 参数，如果有就往 query 参数跳转，没有跳转到首页
-    let redirect: any = $route.query.redirect;
-    $router.push({ path: redirect || '/' });
+    $router.push('/');
     // 登录成功提示信息
     ElNotification({
       title: `HI，${getTime()}好`,

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 // 引入用户相关的仓库
 import useUserStore from '@/store/modules/user'
+
 // 第一步：利用 axios 对象的 create 方法，创建 axios 实例（其它的配置：基础路径、超时时间）
 let request = axios.create({
   // 基础路径，携带 api
@@ -13,11 +14,6 @@ let request = axios.create({
 
 // 第二步： request 实例添加请求与响应式拦截器
 request.interceptors.request.use((config) => {
-  // 获取用户相关的小仓库：获取仓库内部 token，登录成功以后携带给服务器
-  let userStore = useUserStore()
-  if (userStore.token) {
-    config.headers.token = userStore.token
-  }
   // config 配置对象，headers 属性请求头，经常给服务器端携带公共参数
   return config
 })

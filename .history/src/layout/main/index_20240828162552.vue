@@ -26,7 +26,7 @@ watch(() => LayOutSettingStore.refresh, () => {
   // 点击刷新按钮：路由组件销毁
   flag.value = false;
   nextTick(() => {
-    flag.value = true;
+    // flag.value = true;
   })
 })
 </script>

@@ -57,7 +57,7 @@ const logout = () => {
   // 第二件事：仓库当中关于用于相关的数据清空[token / username / avatar]
   // 第三件事：跳转到登录页面
   userStore.userLogout();
-  $router.push({ path: '/login', query: { redirect: $route.path } });
+  $router.push({ path: '/login' });
 }
 </script>
 

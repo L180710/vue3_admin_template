@@ -12,7 +12,7 @@ import useUserStore from '@/store/modules/user';
 let userStore = useUserStore();
 // 目前首页挂载完毕发请求获取用户信息
 onMounted(() => {
-  userStore.userInfo()
+  useUserStore.userInfo()
 })
 </script>
 

@@ -15,7 +15,7 @@ let userStore = useUserStore(pinia)
 // 全局守卫：项目中任意路由切换都会触发的钩子
 // 全局前置守卫
 router.beforeEach(async (to: any, from: any, next: any) => {
-  document.title = `${setting.title} - ${to.meta.title}`
+  document.title = `setting.title - to.meta.title`
   // to: 你将来要访问哪个路由
   // from：你从哪个路由来
   // next：路由的放行函数

@@ -125,24 +125,13 @@ const addTrademark = () => {
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
 
-  // 第一种写法：ts 问号语法
-  // formRef.value?.clearValidate('tmName');
-  // formRef.value?.clearValidate('logoUrl');
-
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
+  formRef.value?.clearValidate('tmName');
+  formRef.value?.clearValidate('logoUrl');
 }
 
 // 修改已有品牌的按钮回调
 // row：row 即为当前已有品牌
 const updateTrademark = (row: TradeMark) => {
-  // 清空检验规则错误提示信息
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
   // 对话框显示
   dialogFormVisible.value = true;
   // trademarkParams.id = row.id;

@@ -65,7 +65,7 @@
 
 <script setup lang='ts'>
 // 引入组合式 API 函数 ref
-import { ref, onMounted, reactive, nextTick } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { ElMessage, type UploadProps } from 'element-plus';
 import { reqHasTrademark, reqAddOrUpdateTrademark } from '@/api/product/trademark/';
 import { Records, TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
@@ -124,25 +124,11 @@ const addTrademark = () => {
   trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
-
-  // 第一种写法：ts 问号语法
-  // formRef.value?.clearValidate('tmName');
-  // formRef.value?.clearValidate('logoUrl');
-
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
 }
 
 // 修改已有品牌的按钮回调
 // row：row 即为当前已有品牌
 const updateTrademark = (row: TradeMark) => {
-  // 清空检验规则错误提示信息
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
   // 对话框显示
   dialogFormVisible.value = true;
   // trademarkParams.id = row.id;
@@ -159,7 +145,7 @@ const cancel = () => {
 // 对话框确认
 const confirm = async () => {
   // 发请求之前，要对整个表单进行校验
-  await formRef.value.validate();
+  let checkResult: any = await formRef.value.validate();
 
   let result: any = await reqAddOrUpdateTrademark(trademarkParams)
   // 添加 | 修改品牌成功 
@@ -209,8 +195,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   // response: 即为当前这次上传图片 post 请求服务器返回的数据
   trademarkParams.logoUrl = response.data;
-  // 图片上传成功，清除掉对应图片校验结果
-  formRef.value.clearValidate('logoUrl');
 }
 
 // 品牌定义校验规则方法（当表单元素触发 blur 时候，会触发此方法）

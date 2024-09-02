@@ -39,11 +39,11 @@
     <!-- 对话框组件：在添加品牌与修改已有品牌的业务时候使用结构 -->
 
     <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
-      <el-form style="width:80%" :model="trademarkParams" :rules="rules" ref="formRef">
-        <el-form-item label="品牌名称" label-width="100px" prop="tmName">
+      <el-form style="width:80%" :model="trademarkParams" :rules="rules">
+        <el-form-item label="品牌名称" label-width="80px" prop="tmName">
           <el-input placeholder="请您输入品牌名称" v-model="trademarkParams.tmName"></el-input>
         </el-form-item>
-        <el-form-item label="品牌LOGO" label-width="100px" prop="logoUrl">
+        <el-form-item label="品牌LOGO" label-width="80px" prop="logoUrl">
           <!-- upload 组件属性：action -->
           <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :show-file-list="false"
             :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -65,7 +65,7 @@
 
 <script setup lang='ts'>
 // 引入组合式 API 函数 ref
-import { ref, onMounted, reactive, nextTick } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { ElMessage, type UploadProps } from 'element-plus';
 import { reqHasTrademark, reqAddOrUpdateTrademark } from '@/api/product/trademark/';
 import { Records, TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
@@ -79,8 +79,6 @@ let total = ref<number>(0);
 let trademarkArr = ref<Records>([]);
 // 控制对话框显示与隐藏
 let dialogFormVisible = ref<boolean>(true)
-// 获取 el-form 组件实例
-let formRef = ref();
 // 定义收集新增品牌数据
 let trademarkParams = reactive<TradeMark>({
   tmName: '',
@@ -124,25 +122,11 @@ const addTrademark = () => {
   trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
-
-  // 第一种写法：ts 问号语法
-  // formRef.value?.clearValidate('tmName');
-  // formRef.value?.clearValidate('logoUrl');
-
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
 }
 
 // 修改已有品牌的按钮回调
 // row：row 即为当前已有品牌
 const updateTrademark = (row: TradeMark) => {
-  // 清空检验规则错误提示信息
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
   // 对话框显示
   dialogFormVisible.value = true;
   // trademarkParams.id = row.id;
@@ -158,9 +142,7 @@ const cancel = () => {
 }
 // 对话框确认
 const confirm = async () => {
-  // 发请求之前，要对整个表单进行校验
-  await formRef.value.validate();
-
+  dialogFormVisible.value = false;
   let result: any = await reqAddOrUpdateTrademark(trademarkParams)
   // 添加 | 修改品牌成功 
   if (result.code == 200) {
@@ -209,40 +191,83 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   // response: 即为当前这次上传图片 post 请求服务器返回的数据
   trademarkParams.logoUrl = response.data;
-  // 图片上传成功，清除掉对应图片校验结果
-  formRef.value.clearValidate('logoUrl');
 }
 
-// 品牌定义校验规则方法（当表单元素触发 blur 时候，会触发此方法）
-const validatorTmName = (rule: any, value: any, callBack: any) => {
-  // 自定义校验规则
-  if (value.trim().length >= 2) {
-    callBack();
-  } else {
-    // 检验未通过返回的错误的提示信息
-    callBack(new Error('品牌名称位数大于等于两位'));
-  }
-}
-// 品牌 LOGO 图片自定义校验规则方法
-const validatorLogoUrl = (rule: any, value: any, callBack: any) => {
-  // 如果图片上传
-  if (value) {
-    callBack();
-  } else {
-    callBack(new Error('Logo 图片务必上传'))
-  }
+// const validatorTmName = () => {
+//   console.log('1231')
+// }
+
+
+// 表单校验规则现象
+// const rules = {
+//   tmName: [
+//     { required: true, trigger: 'blur', validator: validatorTmName }
+//   ],
+//   logoUrl: []
+// }
+
+</script>
+
+<style scoped lang='scss'>
+// 头像上传
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 
-//表单校验规则现象
-const rules = {
-  tmName: [
-    { required: true, trigger: 'blur', validator: validatorTmName }
-  ],
-  logoUrl: [
-    { required: true, validator: validatorLogoUrl }
-  ]
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
 }
 
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>
+</script>
+
+<style scoped lang='scss'>
+// 头像上传
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>
 </script>
 
 <style scoped lang='scss'>

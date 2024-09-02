@@ -139,10 +139,10 @@ const addTrademark = () => {
 // row：row 即为当前已有品牌
 const updateTrademark = (row: TradeMark) => {
   // 清空检验规则错误提示信息
-  nextTick(() => {
-    formRef.value?.clearValidate('tmName');
-    formRef.value?.clearValidate('logoUrl');
-  })
+  // nextTick(() => {
+  //   formRef.value?.clearValidate('tmName');
+  //   formRef.value?.clearValidate('logoUrl');
+  // })
   // 对话框显示
   dialogFormVisible.value = true;
   // trademarkParams.id = row.id;

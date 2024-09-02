@@ -18,7 +18,7 @@
         </el-table-column>
         <el-table-column label="品牌操作">
           <template #="{ row, $index }">
-            <el-button type="primary" size="small" icon="Edit" @click="updateTrademark(row)"></el-button>
+            <el-button type="primary" size="small" icon="Edit" @click="updateTrademark"></el-button>
             <el-button type="primary" size="small" icon="Delete"></el-button>
           </template>
         </el-table-column>
@@ -38,7 +38,7 @@
     </el-card>
     <!-- 对话框组件：在添加品牌与修改已有品牌的业务时候使用结构 -->
 
-    <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
+    <el-dialog v-model="dialogFormVisible" title="添加品牌">
       <el-form style="width:80%">
         <el-form-item label="品牌名称" label-width="80px">
           <el-input placeholder="请您输入品牌名称" v-model="trademarkParams.tmName"></el-input>
@@ -47,7 +47,7 @@
           <!-- upload 组件属性：action -->
           <el-upload class="avatar-uploader" action="/api/admin/product/fileUpload" :show-file-list="false"
             :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-            <img v-if="trademarkParams.logoUrl" :src="trademarkParams.logoUrl" class="avatar" />
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <el-icon v-else class="avatar-uploader-icon">
               <Plus />
             </el-icon>
@@ -67,8 +67,8 @@
 // 引入组合式 API 函数 ref
 import { ref, onMounted, reactive } from 'vue';
 import { ElMessage, type UploadProps } from 'element-plus';
-import { reqHasTrademark, reqAddOrUpdateTrademark } from '@/api/product/trademark/';
-import { Records, TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
+import { reqHasTrademark } from '@/api/product/trademark/';
+import type { Records, TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
 // 当前页面
 let pageNo = ref<number>(1);
 // 每一页展示多少条数据
@@ -93,6 +93,8 @@ const getHasTrademark = async (page = 1) => {
     total.value = result.data.total
     trademarkArr.value = result.data.records;
   }
+
+
 }
 // 组件挂载完毕钩子 
 onMounted(() => {
@@ -118,22 +120,12 @@ const sizeChange = () => {
 const addTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
-  // 清空收集数据
-  trademarkParams.id = '';
-  trademarkParams.tmName = '';
-  trademarkParams.logoUrl = '';
 }
 
 // 修改已有品牌的按钮回调
-// row：row 即为当前已有品牌
-const updateTrademark = (row: TradeMark) => {
+const updateTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
-  // trademarkParams.id = row.id;
-  // // 展示已有品牌的数据
-  // trademarkParams.tmName = row.tmName;
-  // trademarkParams.logoUrl = row.logoUrl;
-  Object.assign(trademarkParams, row);
 }
 
 // 对话框隐藏
@@ -141,27 +133,8 @@ const cancel = () => {
   dialogFormVisible.value = false;
 }
 // 对话框确认
-const confirm = async () => {
+const confirm = () => {
   dialogFormVisible.value = false;
-  let result: any = await reqAddOrUpdateTrademark(trademarkParams)
-  // 添加 | 修改品牌成功 
-  if (result.code == 200) {
-    // 弹出提示信息
-    ElMessage({
-      type: 'success',
-      message: trademarkParams.id ? '修改品牌成功' : '添加品牌成功'
-    });
-    // 再次发请求获取已有全部的品牌数据
-    getHasTrademark(trademarkParams.id ? pageNo.value : 1);
-  } else {
-    // 添加品牌失败
-    ElMessage({
-      type: 'error',
-      message: trademarkParams.id ? '修改品牌失败' : '添加品牌失败'
-    })
-    // 关闭对话框
-    dialogFormVisible.value = false;
-  }
 }
 
 // 上传图片组件 -> 上传图片之前触发的钩子函数
@@ -169,14 +142,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   // 钩子是在图片上传成功之前触发，上传之前可以约束文件类型大小
   // 要求：上传文件格式 PNG | JPG | GIF 4M
   if (["image/png", "image/jpeg", "image/gif"].includes(rawFile.type)) {
-    if (rawFile.size / 1024 / 1024 < 4) {
-      return true;
-    } else {
-      ElMessage({
-        type: 'error',
-        message: '上传文件大小要小于 4M'
-      })
-    }
 
   } else {
     ElMessage({
@@ -185,12 +150,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
     })
   }
   return false;
-}
-
-// 图片上传成功钩子
-const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
-  // response: 即为当前这次上传图片 post 请求服务器返回的数据
-  trademarkParams.logoUrl = response.data;
 }
 
 </script>

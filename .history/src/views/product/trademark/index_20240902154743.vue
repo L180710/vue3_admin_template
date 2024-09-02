@@ -119,7 +119,6 @@ const addTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
   // 清空收集数据
-  trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
 }

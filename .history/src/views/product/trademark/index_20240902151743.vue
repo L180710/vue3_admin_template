@@ -38,7 +38,7 @@
     </el-card>
     <!-- 对话框组件：在添加品牌与修改已有品牌的业务时候使用结构 -->
 
-    <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
+    <el-dialog v-model="dialogFormVisible" title="添加品牌">
       <el-form style="width:80%">
         <el-form-item label="品牌名称" label-width="80px">
           <el-input placeholder="请您输入品牌名称" v-model="trademarkParams.tmName"></el-input>
@@ -119,21 +119,14 @@ const addTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
   // 清空收集数据
-  trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
 }
 
 // 修改已有品牌的按钮回调
-// row：row 即为当前已有品牌
-const updateTrademark = (row: TradeMark) => {
+const updateTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
-  // trademarkParams.id = row.id;
-  // // 展示已有品牌的数据
-  // trademarkParams.tmName = row.tmName;
-  // trademarkParams.logoUrl = row.logoUrl;
-  Object.assign(trademarkParams, row);
 }
 
 // 对话框隐藏
@@ -144,20 +137,21 @@ const cancel = () => {
 const confirm = async () => {
   dialogFormVisible.value = false;
   let result: any = await reqAddOrUpdateTrademark(trademarkParams)
-  // 添加 | 修改品牌成功 
+  // 添加品牌成功 
   if (result.code == 200) {
+
     // 弹出提示信息
     ElMessage({
       type: 'success',
-      message: trademarkParams.id ? '修改品牌成功' : '添加品牌成功'
+      message: '添加品牌成功'
     });
     // 再次发请求获取已有全部的品牌数据
-    getHasTrademark(trademarkParams.id ? pageNo.value : 1);
+    getHasTrademark();
   } else {
     // 添加品牌失败
     ElMessage({
       type: 'error',
-      message: trademarkParams.id ? '修改品牌失败' : '添加品牌失败'
+      message: '添加品牌失败'
     })
     // 关闭对话框
     dialogFormVisible.value = false;

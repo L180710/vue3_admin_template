@@ -119,7 +119,6 @@ const addTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
   // 清空收集数据
-  trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
 }
@@ -144,20 +143,21 @@ const cancel = () => {
 const confirm = async () => {
   dialogFormVisible.value = false;
   let result: any = await reqAddOrUpdateTrademark(trademarkParams)
-  // 添加 | 修改品牌成功 
+  // 添加品牌成功 
   if (result.code == 200) {
+
     // 弹出提示信息
     ElMessage({
       type: 'success',
-      message: trademarkParams.id ? '修改品牌成功' : '添加品牌成功'
+      message: '添加品牌成功'
     });
     // 再次发请求获取已有全部的品牌数据
-    getHasTrademark(trademarkParams.id ? pageNo.value : 1);
+    getHasTrademark();
   } else {
     // 添加品牌失败
     ElMessage({
       type: 'error',
-      message: trademarkParams.id ? '修改品牌失败' : '添加品牌失败'
+      message: '添加品牌失败'
     })
     // 关闭对话框
     dialogFormVisible.value = false;

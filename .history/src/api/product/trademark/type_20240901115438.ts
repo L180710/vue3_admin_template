@@ -13,15 +13,3 @@ export interface TradeMark {
 
 // 包含全部品牌数据的 ts 类型
 export type Records = TradeMark[]
-
-// 获取已有全部品牌的数据 ts 类型
-export interface TradeMarkResponseData extends ResponseData {
-  data: {
-    records: Records
-    total: number
-    size: number
-    current: number
-    searchCount: boolean
-    pages: number
-  }
-}

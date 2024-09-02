@@ -119,7 +119,6 @@ const addTrademark = () => {
   // 对话框显示
   dialogFormVisible.value = true;
   // 清空收集数据
-  trademarkParams.id = '';
   trademarkParams.tmName = '';
   trademarkParams.logoUrl = '';
 }
@@ -152,7 +151,7 @@ const confirm = async () => {
       message: trademarkParams.id ? '修改品牌成功' : '添加品牌成功'
     });
     // 再次发请求获取已有全部的品牌数据
-    getHasTrademark(trademarkParams.id ? pageNo.value : 1);
+    getHasTrademark();
   } else {
     // 添加品牌失败
     ElMessage({

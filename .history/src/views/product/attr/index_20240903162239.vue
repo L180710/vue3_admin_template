@@ -12,12 +12,7 @@
             }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="120px">
-        <template #="{ row, $index }">
-          <el-button type="primary" size="small" icon="Edit"></el-button>
-          <el-button type="primary" size="small" icon="Delete"></el-button>
-        </template>
-      </el-table-column>
+      <el-table-column label="操作" width="120px"></el-table-column>
     </el-table>
   </el-card>
 </template>
@@ -36,12 +31,6 @@ let attrArr = ref<Attr[]>([]);
 
 // 监听仓库三级分类 ID 的变化
 watch(() => categoryStore.c3Id, async () => {
-
-  // 清空上一次查询到属性与属性值
-  attrArr.value = [];
-  // 保证三级分类有才能发请求（一、二级变化会清空三级）
-  if (!categoryStore.c3Id) return;
-  // 获取分类 Id
   getAttr();
 })
 

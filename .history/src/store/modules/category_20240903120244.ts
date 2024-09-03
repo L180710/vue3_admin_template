@@ -1,6 +1,6 @@
 // 商品分类全局组件的小仓库
 import { defineStore } from 'pinia'
-import { reqC1, reqC2, reqC3 } from '@/api/product/attr'
+import { reqC1, reqC2 } from '@/api/product/attr'
 import type { CategoryResponseData } from '@/api/product/attr/type'
 import type { CategoryState } from './types/type'
 let useCategoryStore = defineStore('Category', {
@@ -14,10 +14,6 @@ let useCategoryStore = defineStore('Category', {
       c2Arr: [],
       // 存储二级分类的 ID
       c2Id: '',
-      // 存储对应二级分类下三级分类的数据
-      c3Arr: [],
-      // 存储二级分类的 ID
-      c3Id: '',
     }
   },
   actions: {
@@ -35,14 +31,6 @@ let useCategoryStore = defineStore('Category', {
       let result: CategoryResponseData = await reqC2(this.c1Id)
       if (result.code == 200) {
         this.c2Arr = result.data
-      }
-    },
-    // 获取三级分类的数据
-    async getC3() {
-      // 获取对应二级分类下的三级分类数据
-      let result: CategoryResponseData = await reqC3(this.c2Id)
-      if (result.code == 200) {
-        this.c3Arr = result.data
       }
     },
   },

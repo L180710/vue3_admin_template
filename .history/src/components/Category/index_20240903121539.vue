@@ -51,8 +51,6 @@ const handler = () => {
 
 // 此方法即为二级分类下拉菜单的 change 事件（选中值的时候会触发，保证二级分类 ID 有了）
 const handler1 = () => {
-  // 清理三级分类数据
-  categoryStore.c3Id = '';
   // 通知仓库获取三级分类的数据
   categoryStore.getC3()
 }

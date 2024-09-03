@@ -16,8 +16,6 @@ let useCategoryStore = defineStore('Category', {
       c2Id: '',
       // 存储对应二级分类下三级分类的数据
       c3Arr: [],
-      // 存储二级分类的 ID
-      c3Id: '',
     }
   },
   actions: {

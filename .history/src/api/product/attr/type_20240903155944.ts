@@ -34,7 +34,6 @@ export interface Attr {
   attrName: string
   categoryId: number
   categoryLevel: number
-  attrValueList: []
 }
 // 存储每一个属性对象数组 ts 类型
 export type AttrList = Attr[]

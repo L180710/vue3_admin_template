@@ -8,8 +8,4 @@ export interface UserState {
   avatar: string
 }
 
-// 定义分类仓库 state 对象的 ts 类型
-export interface CategoryState {
-  c1Id: string | number
-  c1Arr: CategoryObj[]
-}
+// 定义分类仓库 State 对象的

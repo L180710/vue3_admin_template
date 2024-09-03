@@ -1,0 +1,11 @@
+// 这里书写属性相关的 API 文件
+import request from '@/utils/request'
+// 属性管理模块接口地址
+enum API {
+  // 获取一级分类接口地址
+  C1_URL = '/admin/product/getCategory1',
+  // 获取二级分类接口地址
+  C2_URL = '/admin/product/getCategory2',
+  // 获取三级分类接口地址
+  C3_URL = '/admin/product/getCategory3',
+}

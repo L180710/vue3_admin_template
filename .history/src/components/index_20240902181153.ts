@@ -6,7 +6,7 @@ import Category from './Category/index.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 全局对象
-const allGlobalComponent = { SvgIcon, Pagination, Category }
+const allGlobalComponent = { SvgIcon, Pagination }
 
 // 对外暴露插件对象
 export default {

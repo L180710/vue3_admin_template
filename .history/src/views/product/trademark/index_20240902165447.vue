@@ -259,7 +259,7 @@ const removeTradeMark = async (id: number) => {
       message: '删除品牌成功'
     });
     // 再次获取已有的品牌数据
-    getHasTrademark(trademarkArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
+    getHasTrademark(trademarkArr.value.length > 1 ? pageNo.value : pageNo - 1);
   } else {
     ElMessage({
       type: 'error',

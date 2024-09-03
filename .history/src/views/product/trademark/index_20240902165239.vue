@@ -253,13 +253,10 @@ const removeTradeMark = async (id: number) => {
   // 点击确认按钮，删除已有品牌请求 
   let result = await reqDeleteTrademark(id)
   if (result.code == 200) {
-    // 删除成功提示信息
     ElMessage({
       type: 'success',
       message: '删除品牌成功'
     });
-    // 再次获取已有的品牌数据
-    getHasTrademark(trademarkArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
   } else {
     ElMessage({
       type: 'error',

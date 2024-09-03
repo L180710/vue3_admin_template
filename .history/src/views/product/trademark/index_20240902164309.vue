@@ -19,8 +19,7 @@
         <el-table-column label="品牌操作">
           <template #="{ row, $index }">
             <el-button type="primary" size="small" icon="Edit" @click="updateTrademark(row)"></el-button>
-            <el-popconfirm :title="`您确定要删除${row.tmName}?`" width="250px" icon="Delete"
-              @confirm="removeTradeMark(row.id)">
+            <el-popconfirm title="删除提示">
               <template #reference>
                 <el-button type="primary" size="small" icon="Delete"></el-button>
               </template>
@@ -72,7 +71,7 @@
 // 引入组合式 API 函数 ref
 import { ref, onMounted, reactive, nextTick } from 'vue';
 import { ElMessage, type UploadProps } from 'element-plus';
-import { reqHasTrademark, reqAddOrUpdateTrademark, reqDeleteTrademark } from '@/api/product/trademark/';
+import { reqHasTrademark, reqAddOrUpdateTrademark } from '@/api/product/trademark/';
 import { Records, TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
 // 当前页面
 let pageNo = ref<number>(1);
@@ -83,7 +82,7 @@ let total = ref<number>(0);
 // 存储已有品牌数据
 let trademarkArr = ref<Records>([]);
 // 控制对话框显示与隐藏
-let dialogFormVisible = ref<boolean>(false)
+let dialogFormVisible = ref<boolean>(true)
 // 获取 el-form 组件实例
 let formRef = ref();
 // 定义收集新增品牌数据
@@ -246,26 +245,6 @@ const rules = {
   logoUrl: [
     { required: true, validator: validatorLogoUrl }
   ]
-}
-
-// 气泡确认框确认按钮回调
-const removeTradeMark = async (id: number) => {
-  // 点击确认按钮，删除已有品牌请求 
-  let result = await reqDeleteTrademark(id)
-  if (result.code == 200) {
-    // 删除成功提示信息
-    ElMessage({
-      type: 'success',
-      message: '删除品牌成功'
-    });
-    // 再次获取已有的品牌数据
-    getHasTrademark(trademarkArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  } else {
-    ElMessage({
-      type: 'error',
-      message: '删除品牌失败'
-    })
-  }
 }
 
 </script>

@@ -17,9 +17,11 @@
         <el-table-column label="操作" width="120px">
           <template #="{ row, $index }">
             <el-button type="primary" size="small" icon="Edit" @click="updateAttr(row)"></el-button>
-            <el-popconfirm :title="`您确定删除${row.attrName}吗?`" width="200px" @confirm="deleteAttr(row.id)">
+            <el-popconfirm :title="`您确定删除${row.attrName}吗?`" width="200px" @confirm="deleteAttr">
               <template #reference>
-                <el-button type="primary" size="small" icon="Delete"></el-button>
+                <!-- <el-button>Delete </el-button> -->
+                <el-button type="primary" size="small" icon="Delete" @click="deleteAttr(row.id)"></el-button>
+
               </template>
             </el-popconfirm>
           </template>
@@ -62,7 +64,7 @@
 
 <script setup lang='ts'>
 // 组合式 API 函数 watch
-import { watch, ref, reactive, nextTick, onBeforeUnmount } from 'vue';
+import { watch, ref, reactive, nextTick } from 'vue';
 // 引入获取已有属性与属性值接口
 import { reqAttr, reqAddOrUpdateAttr, reqRemoveAttr } from '@/api/product/attr';
 import type { AttrResponseData, Attr, AttrValue } from '@/api/product/attr/type';
@@ -239,11 +241,6 @@ const deleteAttr = async (attrId: number) => {
   }
 }
 
-// 路由组件销毁的时候，把仓库分类相关的数据清空
-onBeforeUnmount(() => {
-  // 清空仓库的数据
-  categoryStore.$reset()
-})
 
 </script>
 

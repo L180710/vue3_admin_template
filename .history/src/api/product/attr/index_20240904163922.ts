@@ -43,5 +43,4 @@ export const reqAddOrUpdateAttr = (data: Attr) =>
   request.post<any, any>(API.ADDORUPDATEATTR_URL, data)
 
 // 删除已有的属性业务
-export const reqRemoveAttr = (attrId: number) =>
-  request.delete<any, any>(API.DELETEATTR_URL + attrId)
+export const reqRemoveAttr = (attrId: number) = request.delete<any, any>(API.DELETEATTR_URL, attrId)

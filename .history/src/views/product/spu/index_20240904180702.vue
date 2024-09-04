@@ -23,7 +23,7 @@
     </el-table>
     <!-- 分页器 -->
     <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[3, 5, 7, 9]"
-      :background="true" layout="prev, pager, next, jumper, ->, sizes, total" :total="total" @current-change="getHasSpu"
+      :background="true" layout="prev, pager, next, jumper, ->, size, total" :total="total" @current-change="getHasSpu"
       @size-change="changeSize" />
   </div>
 </template>

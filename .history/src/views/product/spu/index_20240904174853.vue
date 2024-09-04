@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <!-- 三级分类 -->
+    <category :scene="scene"></category>
+    <el-card style="margin: 10px 0">
+      <el-button type="primary" size="default" icon="Plus">添加SPU</el-button>
+    </el-card>
+    <el-table>
+      <el-table-column label="序号" type="index" align="center" width="80px"></el-table-column>
+      <el-table-column label="SPU名称"></el-table-column>
+      <el-table-column label="SPU描述"></el-table-column>
+      <el-table-column label="SPU操作"></el-table-column>
+    </el-table>
+    <!-- 分页器 -->
+    <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[3, 5, 7, 9]"
+      :background="true" layout="prev, pager, next, jumper, ->, size, total" :total="400" />
+  </div>
+</template>
+
+<script setup lang='ts'>
+import { ref, watch } from 'vue';
+import { reqHasSpu } from '@/api/product/spu';
+import type { HasSpuResponseData, Records } from '@/api/product/spu/type';
+import useCategoryStore from '@/store/modules/category';
+let categoryStore = useCategoryStore();
+
+// 场景数据
+let scene = ref<number>(0);
+// 分页器默认页码
+let pageNo = ref<number>(1);
+// 每一页展示几条数据
+let pageSize = ref<number>(3);
+// 存储已有的 SPU 数据
+let records = ref<Records>();
+
+// 监听三级分类 ID 变化
+watch(() => categoryStore.c3Id, () => {
+  getHasSpu()
+})
+
+// 此方法执行：可以获取某一个三级分类下全部的已有 SPU
+const getHasSpu = async () => {
+  let result: HasSpuResponseData = await reqHasSpu(pageNo.value, pageSize.value, categoryStore.c3Id)
+  if (result.code == 200) {
+    records.value = result.data.records;
+  }
+}
+</script>
+
+<style scoped lang='scss'></style>

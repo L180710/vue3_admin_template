@@ -23,8 +23,7 @@
     </el-table>
     <!-- 分页器 -->
     <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[3, 5, 7, 9]"
-      :background="true" layout="prev, pager, next, jumper, ->, sizes, total" :total="total" @current-change="getHasSpu"
-      @size-change="changeSize" />
+      :background="true" layout="prev, pager, next, jumper, ->, size, total" :total="400" />
   </div>
 </template>
 
@@ -43,8 +42,6 @@ let pageNo = ref<number>(1);
 let pageSize = ref<number>(3);
 // 存储已有的 SPU 数据
 let records = ref<Records>();
-// 存储已有 SPU 总个数
-let total = ref<number>();
 
 // 监听三级分类 ID 变化
 watch(() => categoryStore.c3Id, () => {
@@ -54,19 +51,12 @@ watch(() => categoryStore.c3Id, () => {
 })
 
 // 此方法执行：可以获取某一个三级分类下全部的已有 SPU
-const getHasSpu = async (pager = 1) => {
-  // 修改当前页面
-  pageNo.value = pager;
+const getHasSpu = async () => {
   let result: HasSpuResponseData = await reqHasSpu(pageNo.value, pageSize.value, categoryStore.c3Id)
   if (result.code == 200) {
     records.value = result.data.records;
-    total.value = result.data.total;
+    console.log(records.value);
   }
-}
-
-// 分页器下拉菜单发生变化的时候触发
-const changeSize = () => {
-  getHasSpu();
 }
 </script>
 

@@ -12,7 +12,7 @@ enum API {
   // 获取分类下已有属性与属性值
   ATTR_URL = '/admin/product/attrInfoList/',
   // 新增或修改已有属性的接口
-  ADDORUPDATEATTR_URL = '/admin/product/saveAttrInfo',
+  ADDORUPDATEATTR_URL = '/admin/produce/saveAttrInfo',
 }
 
 // 获取一级分类的接口方法

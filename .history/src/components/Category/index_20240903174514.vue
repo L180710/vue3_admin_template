@@ -2,21 +2,19 @@
   <el-card>
     <el-form :inline="true">
       <el-form-item label="一级分类">
-        <el-select :disabled="scene == 0 ? false : true" v-model="categoryStore.c1Id" style="width:150px"
-          @change="handler">
+        <el-select v-model="categoryStore.c1Id" style="width:150px" @change="handler">
           <el-option v-for="(c1, index) in categoryStore.c1Arr" :key="c1.id" :label="c1.name"
             :value="c1.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="二级分类">
-        <el-select :disabled="scene == 0 ? false : true" v-model="categoryStore.c2Id" style="width:150px"
-          @change="handler1">
+        <el-select v-model="categoryStore.c2Id" style="width:150px" @change="handler1">
           <el-option v-for="(c2, index) in categoryStore.c2Arr" :key="c2.id" :label="c2.name"
             :value="c2.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="三级分类">
-        <el-select :disabled="scene == 0 ? false : true" v-model="categoryStore.c3Id" style="width:150px">
+        <el-select v-model="categoryStore.c3Id" style="width:150px">
           <el-option v-for="(c3, index) in categoryStore.c3Arr" :key="c3.id" :label="c3.name"
             :value="c3.id"></el-option>
         </el-select>
@@ -59,8 +57,6 @@ const handler1 = () => {
   categoryStore.getC3()
 }
 
-// 接收父组件传递过来 scene
-defineProps(['scene'])
 </script>
 
 <style scoped lang='scss'></style>

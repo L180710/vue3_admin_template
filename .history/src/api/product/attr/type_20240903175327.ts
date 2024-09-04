@@ -24,7 +24,6 @@ export interface AttrValue {
   id?: number
   valueName: string
   attrId?: number
-  flag?: boolean
 }
 
 // 存储每一个属性值数组类型
@@ -33,7 +32,7 @@ export type AttrValueList = AttrValue[]
 export interface Attr {
   id?: number
   attrName: string
-  categoryId: number | string
+  categoryId: number
   categoryLevel: number
   attrValueList: []
 }

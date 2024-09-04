@@ -210,8 +210,9 @@ const toEdit = (row: AttrValue, $index: Number) => {
   row.flag = true;
 
   // nextTick：响应式数据发生变化，获取更新的 DOM （组件实例）
+  console.log(inputArr.value[$index]);
   nextTick(() => {
-    inputArr.value[$index].focus();
+
   })
 }
 

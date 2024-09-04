@@ -37,17 +37,12 @@
         <el-table-column label="属性值名称">
           <!-- row：即为当前属性值对象 -->
           <template #="{ row, $index }">
-            <el-input :ref="(vc: any) => inputArr[$index] = vc" v-if="row.flag" @blur="toLook(row, $index)" size="small"
-              placeholder="请你输入属性值名称" v-model="row.valueName"></el-input>
-            <div v-else @click="toEdit(row, $index)">{{ row.valueName }}</div>
+            <el-input v-if="row.flag" @blur="toLook(row, $index)" size="small" placeholder="请你输入属性值名称"
+              v-model="row.valueName"></el-input>
+            <div v-else @click="toEdit(row)">{{ row.valueName }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="属性值操作">
-          <template #="{ row, index }">
-            <el-button type="primary" size="small" icon="Delete"
-              @click="attrParams.attrValueList.splice(index, 1)"></el-button>
-          </template>
-        </el-table-column>
+        <el-table-column label="属性值操作"></el-table-column>
       </el-table>
       <el-button type="primary" size="default" @click="save"
         :disabled="attrParams.attrValueList.length > 0 ? false : true">保存</el-button>
@@ -58,7 +53,7 @@
 
 <script setup lang='ts'>
 // 组合式 API 函数 watch
-import { watch, ref, reactive, nextTick } from 'vue';
+import { watch, ref, reactive } from 'vue';
 // 引入获取已有属性与属性值接口
 import { reqAttr, reqAddOrUpdateAttr } from '@/api/product/attr';
 import type { AttrResponseData, Attr, AttrValue } from '@/api/product/attr/type';
@@ -78,9 +73,7 @@ let attrParams = reactive<Attr>({
   attrValueList: [], // 新增属性值数据
   categoryId: '', // 三级分类 ID
   categoryLevel: 3 // 代表的是三级分类
-});
-// 准备一个数组：将来存储对应组件实例 el-input
-let inputArr = ref<any>([]);
+})
 
 // 监听仓库三级分类 ID 的变化
 watch(() => categoryStore.c3Id, async () => {
@@ -118,12 +111,9 @@ const addAttr = () => {
   scene.value = 1;
 }
 // table 表格修改已有属性按钮的回调
-const updateAttr = (row: Attr) => {
+const updateAttr = () => {
   // 切换为添加与修改属性结构
   scene.value = 1;
-  // 将已有的属性对象赋值给 attrParams 对象即可
-  // ES6 -> Object.assign 进行对象的合并
-  Object.assign(attrParams, JSON.parse(JSON.stringify(row)));
 }
 
 // 取消按钮的回调
@@ -137,11 +127,6 @@ const addAttrValue = () => {
   attrParams.attrValueList.push({
     valueName: '',
     flag: true, // 控制每一个属性制编辑模式与切换模式
-  });
-
-  // 获取最后 el-input 组件聚焦
-  nextTick(() => {
-    inputArr.value[attrParams.attrValueList.length - 1].focus();
   })
 }
 
@@ -205,16 +190,10 @@ const toLook = (row: AttrValue, $index: number) => {
 }
 
 // 属性值 div 点击事件
-const toEdit = (row: AttrValue, $index: Number) => {
+const toEdit = (row: AttrValue) => {
   // 相应属性值对象 flag 变为 true，展示 input
   row.flag = true;
-
-  // nextTick：响应式数据发生变化，获取更新的 DOM （组件实例）
-  nextTick(() => {
-    inputArr.value[$index].focus();
-  })
 }
-
 
 </script>
 

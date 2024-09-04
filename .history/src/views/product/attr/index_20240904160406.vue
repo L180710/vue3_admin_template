@@ -42,12 +42,7 @@
             <div v-else @click="toEdit(row, $index)">{{ row.valueName }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="属性值操作">
-          <template #="{ row, index }">
-            <el-button type="primary" size="small" icon="Delete"
-              @click="attrParams.attrValueList.splice(index, 1)"></el-button>
-          </template>
-        </el-table-column>
+        <el-table-column label="属性值操作"></el-table-column>
       </el-table>
       <el-button type="primary" size="default" @click="save"
         :disabled="attrParams.attrValueList.length > 0 ? false : true">保存</el-button>
@@ -58,7 +53,7 @@
 
 <script setup lang='ts'>
 // 组合式 API 函数 watch
-import { watch, ref, reactive, nextTick } from 'vue';
+import { watch, ref, reactive, nextTicl } from 'vue';
 // 引入获取已有属性与属性值接口
 import { reqAttr, reqAddOrUpdateAttr } from '@/api/product/attr';
 import type { AttrResponseData, Attr, AttrValue } from '@/api/product/attr/type';
@@ -118,12 +113,9 @@ const addAttr = () => {
   scene.value = 1;
 }
 // table 表格修改已有属性按钮的回调
-const updateAttr = (row: Attr) => {
+const updateAttr = () => {
   // 切换为添加与修改属性结构
   scene.value = 1;
-  // 将已有的属性对象赋值给 attrParams 对象即可
-  // ES6 -> Object.assign 进行对象的合并
-  Object.assign(attrParams, JSON.parse(JSON.stringify(row)));
 }
 
 // 取消按钮的回调
@@ -137,11 +129,6 @@ const addAttrValue = () => {
   attrParams.attrValueList.push({
     valueName: '',
     flag: true, // 控制每一个属性制编辑模式与切换模式
-  });
-
-  // 获取最后 el-input 组件聚焦
-  nextTick(() => {
-    inputArr.value[attrParams.attrValueList.length - 1].focus();
   })
 }
 
@@ -209,10 +196,7 @@ const toEdit = (row: AttrValue, $index: Number) => {
   // 相应属性值对象 flag 变为 true，展示 input
   row.flag = true;
 
-  // nextTick：响应式数据发生变化，获取更新的 DOM （组件实例）
-  nextTick(() => {
-    inputArr.value[$index].focus();
-  })
+  console.log(inputArr.value[$index]);
 }
 
 

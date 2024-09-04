@@ -118,12 +118,9 @@ const addAttr = () => {
   scene.value = 1;
 }
 // table 表格修改已有属性按钮的回调
-const updateAttr = (row: Attr) => {
+const updateAttr = () => {
   // 切换为添加与修改属性结构
   scene.value = 1;
-  // 将已有的属性对象赋值给 attrParams 对象即可
-  // ES6 -> Object.assign 进行对象的合并
-  Object.assign(attrParams, JSON.parse(JSON.stringify(row)));
 }
 
 // 取消按钮的回调
@@ -210,8 +207,9 @@ const toEdit = (row: AttrValue, $index: Number) => {
   row.flag = true;
 
   // nextTick：响应式数据发生变化，获取更新的 DOM （组件实例）
+  console.log(inputArr.value[$index]);
   nextTick(() => {
-    inputArr.value[$index].focus();
+
   })
 }
 

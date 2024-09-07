@@ -56,8 +56,7 @@
       </el-table>
     </el-form-item>
     <el-form-item>
-      <el-button :disabled="saleAttr.length > 0 ? false : true" type=" primary" size="default"
-        @click="save">保存</el-button>
+      <el-button type=" primary" size="default" @click="save">保存</el-button>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
@@ -69,10 +68,11 @@ import { ElMessage } from 'element-plus';
 import type { SpuData } from '@/api/product/spu/type'
 import { reqAllTradeMark, reqSpuImageList, reqSpuHasSaleAttr, reqAllSaleAttr, reqAddOrUpdateSpu } from '@/api/product/spu';
 import type { SaleAttrValue, HasSaleAttr, SaleAttr, SpuImg, Trademark, AllTradeMark, SpuHasImg, SaleAttrResponseData, HasSaleAttrResponseData } from '@/api/product/spu/type';
+import { ElMessage } from 'element-plus''
 let $emit = defineEmits(['changeScene'])
 // 点击取消按钮：通知父组件切换场景为 1，展示已有的 SPU 数据
 const cancel = () => {
-  $emit('changeScene', { flag: 0, params: 'update' })
+  $emit('changeScene', 0)
 }
 
 // 存储已有 SPU 这些数据
@@ -190,7 +190,6 @@ const addSaleAttr = () => {
 const toEdit = (row: SaleAttr) => {
   // 点击按钮的时候，input出现为编辑模式
   row.flag = true;
-  row.saleAttrValue = ''
 }
 
 // 表单元素失去焦点事件回调
@@ -247,48 +246,21 @@ const save = async () => {
   SpuParams.value.spuSaleAttrList = saleAttr.value;
   let result = await reqAddOrUpdateSpu(SpuParams.value);
   if (result.code == 200) {
-    ElMessage({
+    Elessage({
       type: 'success',
       message: SpuParams.value.id ? '更新成功' : '添加成功'
-    });
-    $emit('changeScene', { flag: 0, params: SpuParams.value.id ? 'update' : 'add' });
+    })
   } else {
-    ElMessage({
+    Elessage({
       type: 'error',
       message: SpuParams.value.id ? '更新成功' : '添加成功'
-    });
+    })
   }
-}
 
-// 添加一个新的 SPU 初始化请求方法
-const initAddSpu = async (c3Id: number | string) => {
-  // 清空数据
-  Object.assign(SpuParams.value, {
-    category3Id: '',
-    spuName: '',
-    description: '',
-    tmId: '',
-    spuImageList: [],
-    spuSaleAttrList: [],
-  });
-  // 清空照片
-  imgList.value = [];
-  // 清空销售属性
-  saleAttr.value = [];
-  saleAttrIdAndValueName.value = '';
-  // 存储三级分类的 ID
-  SpuParams.value.category3Id = c3Id;
-  // 获取全部品牌的数据
-  let result: AllTradeMark = await reqAllTradeMark();
-  let result1: HasSaleAttrResponseData = await reqAllSaleAttr();
-  // 存储数据
-  AllTradeMarks.value = result.data;
-  allSaleAttr.value = result1.data;
 }
-
 
 // 对外暴露
-defineExpose({ initHasSpuData, initAddSpu })
+defineExpose({ initHasSpuData })
 </script>
 
 <style scoped lang='scss'></style>

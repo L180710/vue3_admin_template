@@ -66,7 +66,7 @@ export interface SaleAttrValue {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number | string
+  baseSaleAttrId: number
   saleAttrValueName: string
   saleAttrName?: string
   isChecked?: null

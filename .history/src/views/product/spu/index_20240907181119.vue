@@ -106,7 +106,7 @@ const changeScene = (obj: any) => {
   if (obj.params == 'update') {
     getHasSpu(pageNo.value);
   } else {
-    getHasSpu()
+    getHasSpu(pageNo.value)
   }
 }
 

@@ -72,7 +72,7 @@ import type { SaleAttrValue, HasSaleAttr, SaleAttr, SpuImg, Trademark, AllTradeM
 let $emit = defineEmits(['changeScene'])
 // 点击取消按钮：通知父组件切换场景为 1，展示已有的 SPU 数据
 const cancel = () => {
-  $emit('changeScene', { flag: 0, params: 'update' })
+  $emit('changeScene', 0)
 }
 
 // 存储已有 SPU 这些数据

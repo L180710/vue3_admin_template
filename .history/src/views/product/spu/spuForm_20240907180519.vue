@@ -72,7 +72,7 @@ import type { SaleAttrValue, HasSaleAttr, SaleAttr, SpuImg, Trademark, AllTradeM
 let $emit = defineEmits(['changeScene'])
 // 点击取消按钮：通知父组件切换场景为 1，展示已有的 SPU 数据
 const cancel = () => {
-  $emit('changeScene', { flag: 0, params: 'update' })
+  $emit('changeScene', 0)
 }
 
 // 存储已有 SPU 这些数据
@@ -251,7 +251,7 @@ const save = async () => {
       type: 'success',
       message: SpuParams.value.id ? '更新成功' : '添加成功'
     });
-    $emit('changeScene', { flag: 0, params: SpuParams.value.id ? 'update' : 'add' });
+    $emit('changeScene', 0);
   } else {
     ElMessage({
       type: 'error',
@@ -270,12 +270,7 @@ const initAddSpu = async (c3Id: number | string) => {
     tmId: '',
     spuImageList: [],
     spuSaleAttrList: [],
-  });
-  // 清空照片
-  imgList.value = [];
-  // 清空销售属性
-  saleAttr.value = [];
-  saleAttrIdAndValueName.value = '';
+  })
   // 存储三级分类的 ID
   SpuParams.value.category3Id = c3Id;
   // 获取全部品牌的数据

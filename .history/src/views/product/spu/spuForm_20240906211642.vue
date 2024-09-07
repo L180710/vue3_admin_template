@@ -40,12 +40,10 @@
         <el-table-column label="销售属性值">
           <!-- row：即为当前 SPU 已有销售属性对象 -->
           <template #="{ row, $index }">
-            <el-tag style="margin: 0 5px" @close="row.spuSaleAttrValueList.splice(index, 1)"
-              v-for="(item, index) in row.spuSaleAttrValueList" :key="row.id" class="mx-1" closable>{{
+            <el-tag style="margin: 0 5px" v-for="(item, index) in row.spuSaleAttrValueList" :key="row.id" class="mx-1"
+              closable>{{
                 item.saleAttrValueName }}</el-tag>
-            <el-input @blur="toLook(row)" v-model="row.saleAttrValue" v-if="row.flag == true" placeholder="请你输入属性值"
-              size="small" style="width:100px"></el-input>
-            <el-button @click="toEdit(row)" v-else type="primary" size="small" icon="Plus"></el-button>
+            <el-button type="primary" size="small" icon="Plus"></el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="120px">
@@ -56,8 +54,7 @@
       </el-table>
     </el-form-item>
     <el-form-item>
-      <el-button :disabled="saleAttr.length > 0 ? false : true" type=" primary" size="default"
-        @click="save">保存</el-button>
+      <el-button type=" primary" size="default" @click="">保存</el-button>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
@@ -67,12 +64,13 @@
 import { ref, computed } from 'vue';
 import { ElMessage } from 'element-plus';
 import type { SpuData } from '@/api/product/spu/type'
-import { reqAllTradeMark, reqSpuImageList, reqSpuHasSaleAttr, reqAllSaleAttr, reqAddOrUpdateSpu } from '@/api/product/spu';
-import type { SaleAttrValue, HasSaleAttr, SaleAttr, SpuImg, Trademark, AllTradeMark, SpuHasImg, SaleAttrResponseData, HasSaleAttrResponseData } from '@/api/product/spu/type';
+import { reqAllTradeMark, reqSpuImageList, reqSpuHasSaleAttr, reqAllSaleAttr } from '@/api/product/spu';
+import type { HasSaleAttr, SaleAttr, SpuImg, Trademark, AllTradeMark, SpuHasImg, SaleAttrResponseData, HasSaleAttrResponseData } from '@/api/product/spu/type';
+// import { TradeMark } from '../../../api/product/trademark/type';
 let $emit = defineEmits(['changeScene'])
 // 点击取消按钮：通知父组件切换场景为 1，展示已有的 SPU 数据
 const cancel = () => {
-  $emit('changeScene', { flag: 0, params: 'update' })
+  $emit('changeScene', 0)
 }
 
 // 存储已有 SPU 这些数据
@@ -185,110 +183,8 @@ const addSaleAttr = () => {
   // 清空收集的数据
   saleAttrIdAndValueName.value = '';
 }
-
-// 属性值按钮的点击事件
-const toEdit = (row: SaleAttr) => {
-  // 点击按钮的时候，input出现为编辑模式
-  row.flag = true;
-  row.saleAttrValue = ''
-}
-
-// 表单元素失去焦点事件回调
-const toLook = (row: SaleAttr) => {
-  // 整理手机的属性 ID 与属性值的名字
-  const { baseSaleAttrId, saleAttrValue } = row;
-  // 整理成服务器需要的属性值形式
-  let newSaleAttrValue: SaleAttrValue = {
-    baseSaleAttrId,
-    saleAttrValueName: saleAttrValue
-  };
-
-  // 非法情况判断
-  if (saleAttrValue.trim() == '') {
-    ElMessage({
-      type: 'error',
-      message: '属性值不能为空'
-    })
-  }
-  // 判断属性值是否在数组中存在
-  let repeat = row.spuSaleAttrValueList.find(item => {
-    return item.saleAttrValueName == saleAttrValue
-  });
-
-  if (repeat) {
-    ElMessage({
-      type: 'error',
-      message: '属性值重复'
-    })
-    return;
-  }
-
-
-  // 追加新的属性值对象
-  row.spuSaleAttrValueList.push(newSaleAttrValue);
-  // 切换为查看模式
-  row.flag = false;
-}
-
-// 保存按钮的回调
-const save = async () => {
-  // 整理参数
-  // 发请求：添加或更新已有 SPU
-  // 成功
-  // 失败
-  // 1、照片墙的数据
-  SpuParams.value.spuImageList = imgList.value.map(item => {
-    return {
-      imgName: item.name, // 图片的名字
-      imgUrl: (item.response && item.response.data) || item.url
-    }
-  });
-  // 2 整理销售属性的数据
-  SpuParams.value.spuSaleAttrList = saleAttr.value;
-  let result = await reqAddOrUpdateSpu(SpuParams.value);
-  if (result.code == 200) {
-    ElMessage({
-      type: 'success',
-      message: SpuParams.value.id ? '更新成功' : '添加成功'
-    });
-    $emit('changeScene', { flag: 0, params: SpuParams.value.id ? 'update' : 'add' });
-  } else {
-    ElMessage({
-      type: 'error',
-      message: SpuParams.value.id ? '更新成功' : '添加成功'
-    });
-  }
-}
-
-// 添加一个新的 SPU 初始化请求方法
-const initAddSpu = async (c3Id: number | string) => {
-  // 清空数据
-  Object.assign(SpuParams.value, {
-    category3Id: '',
-    spuName: '',
-    description: '',
-    tmId: '',
-    spuImageList: [],
-    spuSaleAttrList: [],
-  });
-  // 清空照片
-  imgList.value = [];
-  // 清空销售属性
-  saleAttr.value = [];
-  saleAttrIdAndValueName.value = '';
-  // 存储三级分类的 ID
-  SpuParams.value.category3Id = c3Id;
-  // 获取全部品牌的数据
-  let result: AllTradeMark = await reqAllTradeMark();
-  let result1: HasSaleAttrResponseData = await reqAllSaleAttr();
-  // 存储数据
-  AllTradeMarks.value = result.data;
-  allSaleAttr.value = result1.data;
-}
-
-
 // 对外暴露
-defineExpose({ initHasSpuData, initAddSpu })
+defineExpose({ initHasSpuData })
 </script>
 
 <style scoped lang='scss'></style>

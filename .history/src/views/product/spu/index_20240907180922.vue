@@ -98,16 +98,12 @@ const updateSpu = (row: SpuData) => {
 }
 
 // 子组件 SpuForm 绑定自定义事件：目前是让子组件通知父组件切换场景为0
-const changeScene = (obj: any) => {
+const changeScene = ({ flag, params }) => {
 
   // 子组价 spuForm 点击取消变为场景 0：展示已有的 SPu
-  scene.value = obj.flag;
+  scene.value = num;
   // 再次获取全部已有 SPU
-  if (obj.params == 'update') {
-    getHasSpu(pageNo.value);
-  } else {
-    getHasSpu()
-  }
+  getHasSpu();
 }
 
 </script>

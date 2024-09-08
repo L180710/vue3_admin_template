@@ -1,5 +1,5 @@
 <template>
-  <el-form label-width="100px">
+  <el-form width="100px">
     <el-form-item label="SKU名称">
       <el-input placeholder></el-input>
     </el-form-item>
@@ -44,27 +44,10 @@
         <el-option label="123"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="图片名称">
-      <el-table border>
-        <el-table-column type="selection" width="80px" align="center"></el-table-column>
-        <el-table-column label="图片"></el-table-column>
-        <el-table-column label="名称"></el-table-column>
-        <el-table-column label="操作"></el-table-column>
-      </el-table>
-    </el-form-item>
-    <el-form-item>
-      <el-botton type="primary" size="default">保存</el-botton>
-      <el-botton type="primary" size="default" @click="cancel">取消</el-botton>
-    </el-form-item>
   </el-form>
 </template>
 
 <script setup lang='ts'>
-let $emit = defineEmits(['changeScene']);
-// 取消按钮的回调
-const cancel = () => {
-  $emit('changeScene', { flag: 0, params: '' });
-}
 
 </script>
 

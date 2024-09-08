@@ -30,7 +30,7 @@
       <!-- 添加或修改 SPU 子组件 -->
       <SpuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></SpuForm>
       <!-- 添加或修改 SKU 子组件 -->
-      <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
+      <SkuForm ref="SkuForm" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
     </el-card>
 
   </div>
@@ -46,7 +46,7 @@ import SkuForm from './SkuForm.vue';
 let categoryStore = useCategoryStore();
 
 // 场景数据
-let scene = ref<number>(0); // 0-显示已有SPU，1-添加或修改已有SPU，2-添加SKU结构
+let scene = ref<number>(2); // 0-显示已有SPU，1-添加或修改已有SPU，2-添加SKU结构
 // 分页器默认页码
 let pageNo = ref<number>(1);
 // 每一页展示几条数据

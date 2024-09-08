@@ -14,7 +14,7 @@
           <el-table-column label="SPU操作">
             <!-- row即为已有的 SPU 对象 -->
             <template #="{ row, $index }">
-              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku"></el-button>
+              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
               <el-button type="primary" size="small" icon="Edit" title="修改SPU" @click="updateSpu(row)"></el-button>
               <el-button type="primary" size="small" icon="View" title="查看SKU列表"></el-button>
               <el-button type="primary" size="small" icon="Delete" title="删除SPU"></el-button>
@@ -30,7 +30,7 @@
       <!-- 添加或修改 SPU 子组件 -->
       <SpuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></SpuForm>
       <!-- 添加或修改 SKU 子组件 -->
-      <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
+      <SkuForm ref="SkuForm" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
     </el-card>
 
   </div>
@@ -46,7 +46,7 @@ import SkuForm from './SkuForm.vue';
 let categoryStore = useCategoryStore();
 
 // 场景数据
-let scene = ref<number>(0); // 0-显示已有SPU，1-添加或修改已有SPU，2-添加SKU结构
+let scene = ref<number>(2); // 0-显示已有SPU，1-添加或修改已有SPU，2-添加SKU结构
 // 分页器默认页码
 let pageNo = ref<number>(1);
 // 每一页展示几条数据
@@ -111,9 +111,6 @@ const changeScene = (obj: any) => {
 }
 
 // 添加 SKU 按钮的回调
-const addSku = () => {
-  scene.value = 2;
-}
 
 </script>
 

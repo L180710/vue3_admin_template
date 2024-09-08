@@ -30,7 +30,7 @@
       <!-- 添加或修改 SPU 子组件 -->
       <SpuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></SpuForm>
       <!-- 添加或修改 SKU 子组件 -->
-      <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
+      <SkuForm ref="SkuForm" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
     </el-card>
 
   </div>
@@ -112,6 +112,7 @@ const changeScene = (obj: any) => {
 
 // 添加 SKU 按钮的回调
 const addSku = () => {
+  alert(323)
   scene.value = 2;
 }
 

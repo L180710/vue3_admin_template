@@ -60,12 +60,7 @@
 </template>
 
 <script setup lang='ts'>
-let $emit = defineEmits(['changeScene']);
-// 取消按钮的回调
-const cancel = () => {
-  $emit('changeScene', { flag: 0, params: '' });
-}
-
+let $emit = defineEmits(['changeScene'])
 </script>
 
 <style scoped lang='scss'></style>

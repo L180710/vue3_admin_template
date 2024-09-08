@@ -112,6 +112,7 @@ const changeScene = (obj: any) => {
 
 // 添加 SKU 按钮的回调
 const addSku = () => {
+  alert(323)
   scene.value = 2;
 }
 

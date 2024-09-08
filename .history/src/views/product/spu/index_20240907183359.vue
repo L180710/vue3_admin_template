@@ -14,7 +14,7 @@
           <el-table-column label="SPU操作">
             <!-- row即为已有的 SPU 对象 -->
             <template #="{ row, $index }">
-              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku"></el-button>
+              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
               <el-button type="primary" size="small" icon="Edit" title="修改SPU" @click="updateSpu(row)"></el-button>
               <el-button type="primary" size="small" icon="View" title="查看SKU列表"></el-button>
               <el-button type="primary" size="small" icon="Delete" title="删除SPU"></el-button>
@@ -30,7 +30,7 @@
       <!-- 添加或修改 SPU 子组件 -->
       <SpuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></SpuForm>
       <!-- 添加或修改 SKU 子组件 -->
-      <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
+      <SkuForm ref="SkuForm" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
     </el-card>
 
   </div>
@@ -108,11 +108,6 @@ const changeScene = (obj: any) => {
   } else {
     getHasSpu()
   }
-}
-
-// 添加 SKU 按钮的回调
-const addSku = () => {
-  scene.value = 2;
 }
 
 </script>

@@ -63,7 +63,7 @@
 let $emit = defineEmits(['changeScene']);
 // 取消按钮的回调
 const cancel = () => {
-  $emit('changeScene', { flag: 0, params: '' });
+  $emit('changeScene', { flag: 0, params: '' })
 }
 
 </script>

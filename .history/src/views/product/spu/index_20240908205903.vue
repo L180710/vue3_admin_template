@@ -118,7 +118,7 @@ const addSku = (row: SpuData) => {
   // 点击添加 SKU 按钮切换场景 2
   scene.value = 2;
   // 调用子组件的方法初始化添加 SKU 数据
-  sku.value.initSkuData(categoryStore.c1Id, categoryStore.c2Id, row);
+  sku.value.initSkuData();
 }
 
 </script>

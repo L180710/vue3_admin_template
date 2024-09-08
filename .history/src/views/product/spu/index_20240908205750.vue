@@ -114,13 +114,20 @@ const changeScene = (obj: any) => {
 
 // 添加 SKU 按钮的回调
 const addSku = (row: SpuData) => {
-  console.log('---', row)
   // 点击添加 SKU 按钮切换场景 2
   scene.value = 2;
   // 调用子组件的方法初始化添加 SKU 数据
-  sku.value.initSkuData(categoryStore.c1Id, categoryStore.c2Id, row);
+  sku.value.initSkuData();
 }
 
+// 当前子组件的方法对外暴露
+const initSkuData = () => {
+  alert('获取添加 SKU 需要的数据在这发请求')
+}
+
+defineExpose({
+  initSkuData
+})
 </script>
 
 <style scoped lang='scss'></style>

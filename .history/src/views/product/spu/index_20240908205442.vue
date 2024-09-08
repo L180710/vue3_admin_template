@@ -14,7 +14,7 @@
           <el-table-column label="SPU操作">
             <!-- row即为已有的 SPU 对象 -->
             <template #="{ row, $index }">
-              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
+              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku"></el-button>
               <el-button type="primary" size="small" icon="Edit" title="修改SPU" @click="updateSpu(row)"></el-button>
               <el-button type="primary" size="small" icon="View" title="查看SKU列表"></el-button>
               <el-button type="primary" size="small" icon="Delete" title="删除SPU"></el-button>
@@ -113,14 +113,21 @@ const changeScene = (obj: any) => {
 }
 
 // 添加 SKU 按钮的回调
-const addSku = (row: SpuData) => {
-  console.log('---', row)
+const addSku = () => {
   // 点击添加 SKU 按钮切换场景 2
   scene.value = 2;
   // 调用子组件的方法初始化添加 SKU 数据
-  sku.value.initSkuData(categoryStore.c1Id, categoryStore.c2Id, row);
+  sku.value.initAddSpu();
 }
 
+// 当前子组件的方法对外暴露
+const initSkuData = () => {
+  alert('获取添加 SKU 需要的数据在这发请求')
+}
+
+defineExpose({
+  initSkuData
+})
 </script>
 
 <style scoped lang='scss'></style>

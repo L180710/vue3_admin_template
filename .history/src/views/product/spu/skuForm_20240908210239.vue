@@ -53,8 +53,8 @@
       </el-table>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" size="default">保存</el-button>
-      <el-button type="primary" size="default" @click="cancel">取消</el-button>
+      <el-botton type="primary" size="default">保存</el-botton>
+      <el-botton type="primary" size="default" @click="cancel">取消</el-botton>
     </el-form-item>
   </el-form>
 </template>
@@ -62,7 +62,7 @@
 <script setup lang='ts'>
 // 引入请求 API
 import { reqAttr } from '@/api/product/attr';
-import { reqSpuImageList, reqSpuHasSaleAttr } from '@/api/product/spu';
+import { reqSpuImageList } from '@/api/product/spu';
 let $emit = defineEmits(['changeScene']);
 // 取消按钮的回调
 const cancel = () => {
@@ -70,14 +70,10 @@ const cancel = () => {
 }
 
 // 当前子组件的方法对外暴露
-const initSkuData = async (c1Id: number | string, c2Id: number | string, spu: any) => {
-  console.log('spu', c1Id, c2Id, spu)
-  // 获取平台属性
-  let result: any = await reqAttr(c1Id, c2Id, spu.category3Id)
-  console.log('--', result)
+const initSkuData = (c1Id: number | string, c2Id: number | string, spu: any) => {
+  alert('获取添加 SKU 需要的数据在这发请求')
 }
 
-// 对外暴露的方法
 defineExpose({
   initSkuData
 })

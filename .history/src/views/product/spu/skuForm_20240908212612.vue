@@ -71,7 +71,7 @@ const cancel = () => {
 
 // 当前子组件的方法对外暴露
 const initSkuData = async (c1Id: number | string, c2Id: number | string, spu: any) => {
-  console.log('spu', c1Id, c2Id, spu)
+  console.log('spu', spu)
   // 获取平台属性
   let result: any = await reqAttr(c1Id, c2Id, spu.category3Id)
   console.log('--', result)

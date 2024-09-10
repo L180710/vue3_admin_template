@@ -159,8 +159,6 @@ const save = async () => {
     });
     // 获取最新的全部账户信息
     getHasUser(userParams.id ? pageNo.value : 1);
-    // 浏览器自动刷新一次
-    window.location.reload();
   } else {
     // 提示信息
     ElMessage({

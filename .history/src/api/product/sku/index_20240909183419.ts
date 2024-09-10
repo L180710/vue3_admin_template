@@ -29,4 +29,4 @@ export const reqSkuInfo = (skuId: number) =>
   request.get<any, SkuInfoData>(API.SKUINFO_URL + skuId)
 // 删除某一个已有商品
 export const reqRemoveSku = (skuId: number) =>
-  request.delete<any, any>(API.DELETESKU_URL + skuId)
+  request.delete<any, any>(API.DELETESKU_URL, +skuId)

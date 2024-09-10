@@ -157,12 +157,6 @@ const removeSku = async (id: number) => {
     });
     // 获取已有全部商品
     getHasSku(skuArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  } else {
-    ElMessage({
-      type: 'error',
-      message: '删除失败'
-    });
-
   }
 }
 </script>

@@ -78,7 +78,7 @@
 import { ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
 // 引入请求
-import { reqSkuList, reqCancelSale, reqSaleSku, reqSkuInfo, reqRemoveSku } from '@/api/product/sku';
+import { reqSkuList, reqCancelSale, reqSaleSku, reqSkuInfo } from '@/api/product/sku';
 import type { SkuResponseData, SkuData, SkuInfoData } from '@/api/product/sku/type';
 // 分页器当前页码
 let pageNo = ref<number>(1);
@@ -146,25 +146,6 @@ const findSku = async (row: SkuData) => {
   skuInfo.value = result.data;
 }
 
-// 删除某一个已有的商品
-const removeSku = async (id: number) => {
-  let result: any = await reqRemoveSku(id);
-  if (result.code == 200) {
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '刪除成功'
-    });
-    // 获取已有全部商品
-    getHasSku(skuArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  } else {
-    ElMessage({
-      type: 'error',
-      message: '删除失败'
-    });
-
-  }
-}
 </script>
 
 <style scoped lang='scss'>

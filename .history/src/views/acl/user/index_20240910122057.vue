@@ -158,9 +158,7 @@ const save = async () => {
       message: userParams.id ? '更新成功' : '添加成功'
     });
     // 获取最新的全部账户信息
-    getHasUser(userParams.id ? pageNo.value : 1);
-    // 浏览器自动刷新一次
-    window.location.reload();
+    getHasUser();
   } else {
     // 提示信息
     ElMessage({

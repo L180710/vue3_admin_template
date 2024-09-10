@@ -160,7 +160,7 @@ const removeSku = async (id: number) => {
   } else {
     ElMessage({
       type: 'error',
-      message: '删除失败'
+      message: '删除是吧'
     });
 
   }

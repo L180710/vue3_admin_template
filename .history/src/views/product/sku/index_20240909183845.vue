@@ -148,22 +148,7 @@ const findSku = async (row: SkuData) => {
 
 // 删除某一个已有的商品
 const removeSku = async (id: number) => {
-  let result: any = await reqRemoveSku(id);
-  if (result.code == 200) {
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '刪除成功'
-    });
-    // 获取已有全部商品
-    getHasSku(skuArr.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  } else {
-    ElMessage({
-      type: 'error',
-      message: '删除失败'
-    });
-
-  }
+  let result = await reqRemoveSku(id);
 }
 </script>
 

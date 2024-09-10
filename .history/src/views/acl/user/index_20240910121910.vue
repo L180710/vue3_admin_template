@@ -131,15 +131,6 @@ const addUser = () => {
 
 // 更新已有用户按钮问题
 const updateUser = (row: User) => {
-  // 抽屉显示处理
-  drawer.value = true;
-  // 存储收集已有的账户信息
-  Object.assign(userParams, row);
-  // 清除上一次错误的提示信息
-  nextTick(() => {
-    formRef.value.clearValidate('username');
-    formRef.value.clearValidate('name');
-  })
 }
 
 // 保存按钮的问题
@@ -158,9 +149,7 @@ const save = async () => {
       message: userParams.id ? '更新成功' : '添加成功'
     });
     // 获取最新的全部账户信息
-    getHasUser(userParams.id ? pageNo.value : 1);
-    // 浏览器自动刷新一次
-    window.location.reload();
+    getHasUser();
   } else {
     // 提示信息
     ElMessage({

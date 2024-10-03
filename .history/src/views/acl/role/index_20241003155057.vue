@@ -5,8 +5,8 @@
         <el-input placeholder="请你输入搜索职位关键字" v-model="keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="default" :disabled="keyword ? false : true" @click="search">搜索</el-button>
-        <el-button type="primary" size="default" @click="reset">重置</el-button>
+        <el-button type="primary" size="default" :disabled="keyword ? false : true">搜索</el-button>
+        <el-button type="primary" size="default">重置</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -18,7 +18,7 @@
       <el-table-column align="center" label="职位名称" prop="roleName"></el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" show-overflow-tooltip></el-table-column>
       <el-table-column align="center" label="更新时间" prop="updateTime" show-overflow-tooltip></el-table-column>
-      <el-table-column align="center" label="操作" width="280px">
+      <el-table-column align="center" label="操作" width="260px">
         <!-- row: 已有的职位对象 -->
         <template #="{ row, $index }">
           <el-button type="primary" size="small" icon="User">分配权限</el-button>
@@ -38,9 +38,6 @@ import { ref, onMounted } from 'vue';
 // 请求方法
 import { reqAllRoleList } from '@/api/acl/role';
 import type { RoleResponseData, Records } from '@/api/acl/role/type';
-// 引入骨架仓库
-import useLayOutSettingStore from '@/store/modules/setting';
-let settingStore = useLayOutSettingStore();
 // 当前页码
 let pageNo = ref<number>(1);
 // 一页展示几条数据
@@ -72,18 +69,6 @@ const getHasRole = async (pager = 1) => {
 // 下拉菜单的回调
 const sizeChange = () => {
   getHasRole();
-}
-
-// 搜索按钮的回调
-const search = () => {
-  // 再次发请求根据关键字
-  getHasRole();
-  keyword.value = '';
-}
-
-// 重置按钮的回调
-const reset = () => {
-  settingStore.refresh = !settingStore.refresh;
 }
 
 </script>

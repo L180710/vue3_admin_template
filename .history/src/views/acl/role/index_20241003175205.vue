@@ -11,7 +11,7 @@
     </el-form>
   </el-card>
   <el-card>
-    <el-button type="primary" size="default" icon="Plus" @click="addRole">添加职位</el-button>
+    <el-button type="primary" size="default" icon="Plus">添加职位</el-button>
     <el-table border style="margin: 10px 0" :data="allRole">
       <el-table-column align="center" type="index" label="#"></el-table-column>
       <el-table-column align="center" label="ID" prop="id"></el-table-column>
@@ -22,7 +22,7 @@
         <!-- row: 已有的职位对象 -->
         <template #="{ row, $index }">
           <el-button type="primary" size="small" icon="User">分配权限</el-button>
-          <el-button type="primary" size="small" icon="Edit" @click="updateRole(row)">编辑</el-button>
+          <el-button type="primary" size="small" icon="Edit">编辑</el-button>
           <el-button type="primary" size="small" icon="Delete">删除</el-button>
         </template>
       </el-table-column>
@@ -38,7 +38,7 @@
         <el-input placeholder="请你输入职位名称"></el-input>
       </el-form-item>
       <template #footer>
-        <el-button type="primary" size="default" @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" size="default">取消</el-button>
         <el-button type="primary" size="default">确定</el-button>
       </template>
     </el-form>
@@ -49,7 +49,7 @@
 import { ref, onMounted } from 'vue';
 // 请求方法
 import { reqAllRoleList, reqAddOrUpdateRole } from '@/api/acl/role';
-import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type';
+import type { RoleResponseData, Records } from '@/api/acl/role/type';
 // 引入骨架仓库
 import useLayOutSettingStore from '@/store/modules/setting';
 let settingStore = useLayOutSettingStore();
@@ -98,18 +98,6 @@ const search = () => {
 // 重置按钮的回调
 const reset = () => {
   settingStore.refresh = !settingStore.refresh;
-}
-
-// 添加职位按钮的回调
-const addRole = () => {
-  // 对话框显示出来
-  dialogVisible.value = true;
-}
-
-// 更新已有的职位按钮回调
-const updateRole = (row: RoleData) => {
-  // 显示对话框
-  dialogVisible.value = true;
 }
 
 </script>

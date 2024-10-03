@@ -38,7 +38,7 @@
         <el-input placeholder="请你输入职位名称"></el-input>
       </el-form-item>
       <template #footer>
-        <el-button type="primary" size="default" @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" size="default">取消</el-button>
         <el-button type="primary" size="default">确定</el-button>
       </template>
     </el-form>
@@ -49,7 +49,7 @@
 import { ref, onMounted } from 'vue';
 // 请求方法
 import { reqAllRoleList, reqAddOrUpdateRole } from '@/api/acl/role';
-import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type';
+import type { RoleResponseData, Records } from '@/api/acl/role/type';
 // 引入骨架仓库
 import useLayOutSettingStore from '@/store/modules/setting';
 let settingStore = useLayOutSettingStore();
@@ -107,7 +107,7 @@ const addRole = () => {
 }
 
 // 更新已有的职位按钮回调
-const updateRole = (row: RoleData) => {
+const updateRole = (row) => {
   // 显示对话框
   dialogVisible.value = true;
 }

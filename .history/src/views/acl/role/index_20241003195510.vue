@@ -50,13 +50,13 @@
     </template>
     <template #default>
       <!-- 树形控件 -->
-      <el-tree ref="tree" :data="menuArr" show-checkbox node-key="id" default-expand-all
-        :default-checked-keys="selectArr" :props="defaultProps" />
+      <el-tree style="max-width: 600px" :data="menuArr" show-checkbox node-key="id" default-expand-all
+        :default-checked-keys="[5, 6]" :props="defaultProps" />
     </template>
     <template #footer>
       <div style="flex: auto">
         <el-button @click="drawer = false">取消</el-button>
-        <el-button type="primary" @click="handler">确定</el-button>
+        <el-button type="primary">确定</el-button>
       </div>
     </template>
   </el-drawer>
@@ -67,7 +67,7 @@ import { ref, onMounted, reactive, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 // 请求方法
 import {
-  reqAllRoleList, reqAddOrUpdateRole, reqAllMenuList, reqSetPermission
+  reqAllRoleList, reqAddOrUpdateRole, reqAllMenuList,
 } from '@/api/acl/role';
 import type { RoleResponseData, Records, RoleData, MenuList } from '@/api/acl/role/type';
 // 引入骨架仓库
@@ -98,8 +98,6 @@ let RoleParams = reactive<RoleData>({
 let selectArr = ref<number[]>([]);
 // 定义数组存储用户权限的数据
 let menuArr = ref<MenuList>([]);
-// 获取 tree 组件实例
-let tree = ref<any>();
 
 // 组件挂载完毕
 onMounted(() => {
@@ -216,39 +214,12 @@ const defaultProps = {
 };
 
 const filterSelectArr = (allData: any, initArr: any) => {
-  allData.forEach((item: any) => {
-    if (item.select && item.level == 4) {
+  allData.forEach((item, any) => {
+    if (item.select) {
       initArr.push(item.id);
-    }
-    if (item.children && item.children.length > 0) {
-      filterSelectArr(item.children, initArr)
     }
   })
   return initArr
-}
-
-// 抽屉确定按钮回调
-const handler = async () => {
-  // 职位的 ID
-  const roleId = RoleParams.id;
-  // 选中节点 ID
-  let arr = tree.value.getCheckedKeys();
-  // 半选 ID
-  let arr1 = tree.value.getHalfCheckedKeys();
-  let permissionId = arr.concat(arr1);
-  // 下发权限
-  let result: any = await reqSetPermission(roleId, permissionId)
-  if (result.code == 200) {
-    // 抽屉关闭
-    drawer.value = false;
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '分配权限成功'
-    });
-    // 页面刷新
-    window.location.reload();
-  }
 }
 
 

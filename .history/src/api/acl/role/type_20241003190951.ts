@@ -44,13 +44,6 @@ export interface MenuData {
   type: number
   status: null
   level: number
-  children?: MenuList
+  children: []
   select: boolean
-}
-
-export type MenuList = MenuData[]
-
-// 菜单权限与按钮权限数据 ts 类型
-export interface MenuResponseData extends ResponseData {
-  data: MenuList
 }

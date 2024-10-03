@@ -228,7 +228,7 @@ const filterSelectArr = (allData: any, initArr: any) => {
 }
 
 // 抽屉确定按钮回调
-const handler = async () => {
+const handler = () => {
   // 职位的 ID
   const roleId = RoleParams.id;
   // 选中节点 ID
@@ -237,18 +237,8 @@ const handler = async () => {
   let arr1 = tree.value.getHalfCheckedKeys();
   let permissionId = arr.concat(arr1);
   // 下发权限
-  let result: any = await reqSetPermission(roleId, permissionId)
-  if (result.code == 200) {
-    // 抽屉关闭
-    drawer.value = false;
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '分配权限成功'
-    });
-    // 页面刷新
-    window.location.reload();
-  }
+  let result: any = reqSetPermission(roleId, permissionId)
+
 }
 
 

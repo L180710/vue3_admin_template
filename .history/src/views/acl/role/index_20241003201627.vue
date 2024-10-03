@@ -245,9 +245,7 @@ const handler = async () => {
     ElMessage({
       type: 'success',
       message: '分配权限成功'
-    });
-    // 页面刷新
-    window.location.reload();
+    })
   }
 }
 

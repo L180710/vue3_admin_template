@@ -10,9 +10,7 @@ enum API {
   // 更新已有的职位
   UPDATEROLE_URL = '/admin/acl/role/update',
   // 获取全部的菜单与按钮的数据
-  ALLPERMISSION = '/admin/acl/permission/toAssign',
-  // 给相应的职位分配权限
-  SETPERMISSION_URL = '/admin/acl/permission/doAssign/?',
+  ALLPERMISSTION = '/admin/acl/permission/toAssign',
 }
 
 // 获取全部的角色
@@ -32,10 +30,4 @@ export const reqAddOrUpdateRole = (data: RoleData) => {
 
 // 获取全部菜单与按钮权限数据
 export const reqAllMenuList = (roleId: number) =>
-  request.get<any, MenuResponseData>(API.ALLPERMISSION + roleId)
-
-// 给相应的职位下发权限
-export const reqSetPermission = (roleId: number, permissionId: number[]) =>
-  request.post(
-    API.SETPERMISSION_URL + `roleId=${roleId}&permissionId=${permissionId}`,
-  )
+  request.get<any, any>(API.ALLPERMISSTION + roleId)

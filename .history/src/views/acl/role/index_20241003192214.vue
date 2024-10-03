@@ -50,13 +50,13 @@
     </template>
     <template #default>
       <!-- 树形控件 -->
-      <el-tree ref="tree" :data="menuArr" show-checkbox node-key="id" default-expand-all
-        :default-checked-keys="selectArr" :props="defaultProps" />
+      <el-tree style="max-width: 600px" :data="data" show-checkbox node-key="id" default-expand-all
+        :default-checked-keys="[5, 6]" :props="defaultProps" />
     </template>
     <template #footer>
       <div style="flex: auto">
         <el-button @click="drawer = false">取消</el-button>
-        <el-button type="primary" @click="handler">确定</el-button>
+        <el-button type="primary">确定</el-button>
       </div>
     </template>
   </el-drawer>
@@ -66,13 +66,11 @@
 import { ref, onMounted, reactive, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 // 请求方法
-import {
-  reqAllRoleList, reqAddOrUpdateRole, reqAllMenuList, reqSetPermission
-} from '@/api/acl/role';
-import type { RoleResponseData, Records, RoleData, MenuList } from '@/api/acl/role/type';
+import { reqAllRoleList, reqAddOrUpdateRole,export const reqAllMenuList = (roleId: number) =>
+ } from '@/api/acl/role';
+import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type';
 // 引入骨架仓库
 import useLayOutSettingStore from '@/store/modules/setting';
-import { MenuResponseData } from '../../../api/acl/role/type';
 let settingStore = useLayOutSettingStore();
 // 当前页码
 let pageNo = ref<number>(1);
@@ -94,12 +92,8 @@ let drawer = ref<boolean>(false);
 let RoleParams = reactive<RoleData>({
   roleName: ''
 });
-// 准备一个数组用于存储勾选的节点 ID
-let selectArr = ref<number[]>([]);
 // 定义数组存储用户权限的数据
-let menuArr = ref<MenuList>([]);
-// 获取 tree 组件实例
-let tree = ref<any>();
+let menuArr = ref([]);
 
 // 组件挂载完毕
 onMounted(() => {
@@ -203,54 +197,8 @@ const setPermisstion = async (row: RoleData) => {
   // 收集当前要分类权限的职位数据
   Object.assign(RoleParams, row);
   // 根据职位获取权限数据
-  let result: MenuResponseData = await reqAllMenuList(RoleParams.id);
-  if (result.code == 200) {
-    menuArr.value = result.data;
-    selectArr.value = filterSelectArr(menuArr.value, []);
-  }
+  await reqAllMenuList(RoleParams.id);
 }
-
-const defaultProps = {
-  children: 'Children',
-  label: 'name'
-};
-
-const filterSelectArr = (allData: any, initArr: any) => {
-  allData.forEach((item: any) => {
-    if (item.select && item.level == 4) {
-      initArr.push(item.id);
-    }
-    if (item.children && item.children.length > 0) {
-      filterSelectArr(item.children, initArr)
-    }
-  })
-  return initArr
-}
-
-// 抽屉确定按钮回调
-const handler = async () => {
-  // 职位的 ID
-  const roleId = RoleParams.id;
-  // 选中节点 ID
-  let arr = tree.value.getCheckedKeys();
-  // 半选 ID
-  let arr1 = tree.value.getHalfCheckedKeys();
-  let permissionId = arr.concat(arr1);
-  // 下发权限
-  let result: any = await reqSetPermission(roleId, permissionId)
-  if (result.code == 200) {
-    // 抽屉关闭
-    drawer.value = false;
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '分配权限成功'
-    });
-    // 页面刷新
-    window.location.reload();
-  }
-}
-
 
 </script>
 

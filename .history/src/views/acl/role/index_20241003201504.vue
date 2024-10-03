@@ -238,17 +238,7 @@ const handler = async () => {
   let permissionId = arr.concat(arr1);
   // 下发权限
   let result: any = await reqSetPermission(roleId, permissionId)
-  if (result.code == 200) {
-    // 抽屉关闭
-    drawer.value = false;
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: '分配权限成功'
-    });
-    // 页面刷新
-    window.location.reload();
-  }
+
 }
 
 

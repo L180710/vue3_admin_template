@@ -36,6 +36,4 @@ export const reqAllMenuList = (roleId: number) =>
 
 // 给相应的职位下发权限
 export const reqSetPermission = (roleId: number, permissionId: number[]) =>
-  request.post(
-    API.SETPERMISSION_URL + `roleId=${roleId}&permissionId=${permissionId}`,
-  )
+  request.post(API.SETPERMISSION_URL)

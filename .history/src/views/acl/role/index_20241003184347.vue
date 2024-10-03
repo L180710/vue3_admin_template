@@ -112,8 +112,7 @@ const addRole = () => {
   dialogVisible.value = true;
   // 清空数据
   Object.assign(RoleParams, {
-    id: 0,
-    roleName: '',
+    roleName: ''
   });
   // 清空上一次表单经验错误结果
   nextTick(() => {
@@ -127,10 +126,6 @@ const updateRole = (row: RoleData) => {
   dialogVisible.value = true;
   // 存储已有的职位 -- 带有 ID 的 
   Object.assign(RoleParams, row);
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
-  })
 }
 
 // 自定义经验规则回调
@@ -163,8 +158,8 @@ const save = async () => {
     });
     // 对话框显示
     dialogVisible.value = false;
-    // 再次获取全部已有的职位
-    getHasRole(RoleParams.id ? pageNo.value : 1);
+    // 再次获取全部已有的角色
+    getHasRole();
   }
 }
 

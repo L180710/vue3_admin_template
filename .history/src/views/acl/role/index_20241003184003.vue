@@ -32,7 +32,7 @@
       @current-change="getHasRole" @size-change="sizeChange" />
   </el-card>
   <!-- 添加职位与更新已有职位的结构：对话框 -->
-  <el-dialog v-model="dialogVisible" :title="RoleParams.id ? '更新职位' : '添加职位'">
+  <el-dialog v-model="dialogVisible">
     <el-form :model="RoleParams" :rules="rules">
       <el-form-item label="职位名称" prop="roleName" ref="form">
         <el-input placeholder="请你输入职位名称" v-model="RoleParams.roleName"></el-input>
@@ -86,6 +86,7 @@ const getHasRole = async (pager = 1) => {
   if (result.code == 200) {
     total.value = result.data.total;
     allRole.value = result.data.records;
+
   }
 }
 
@@ -112,12 +113,7 @@ const addRole = () => {
   dialogVisible.value = true;
   // 清空数据
   Object.assign(RoleParams, {
-    id: 0,
-    roleName: '',
-  });
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
+    roleName: ''
   })
 }
 
@@ -125,12 +121,6 @@ const addRole = () => {
 const updateRole = (row: RoleData) => {
   // 显示对话框
   dialogVisible.value = true;
-  // 存储已有的职位 -- 带有 ID 的 
-  Object.assign(RoleParams, row);
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
-  })
 }
 
 // 自定义经验规则回调
@@ -163,8 +153,8 @@ const save = async () => {
     });
     // 对话框显示
     dialogVisible.value = false;
-    // 再次获取全部已有的职位
-    getHasRole(RoleParams.id ? pageNo.value : 1);
+    // 再次获取全部已有的角色
+    getHasRole();
   }
 }
 

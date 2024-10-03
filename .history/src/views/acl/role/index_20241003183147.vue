@@ -32,9 +32,9 @@
       @current-change="getHasRole" @size-change="sizeChange" />
   </el-card>
   <!-- 添加职位与更新已有职位的结构：对话框 -->
-  <el-dialog v-model="dialogVisible" :title="RoleParams.id ? '更新职位' : '添加职位'">
+  <el-dialog v-model="dialogVisible">
     <el-form :model="RoleParams" :rules="rules">
-      <el-form-item label="职位名称" prop="roleName" ref="form">
+      <el-form-item label="职位名称" prop="roleName">
         <el-input placeholder="请你输入职位名称" v-model="RoleParams.roleName"></el-input>
       </el-form-item>
       <template #footer>
@@ -46,8 +46,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, onMounted, reactive, nextTick } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ref, onMounted, reactive } from 'vue';
 // 请求方法
 import { reqAllRoleList, reqAddOrUpdateRole } from '@/api/acl/role';
 import type { RoleResponseData, Records, RoleData } from '@/api/acl/role/type';
@@ -66,8 +65,6 @@ let allRole = ref<Records>([]);
 let total = ref<number>(0);
 // 控制对话框的显示与隐藏
 let dialogVisible = ref<boolean>(false);
-// 获取 form 组件实例
-let form = ref<any>();
 // 收集新增岗位数据
 let RoleParams = reactive<RoleData>({
   roleName: ''
@@ -86,6 +83,7 @@ const getHasRole = async (pager = 1) => {
   if (result.code == 200) {
     total.value = result.data.total;
     allRole.value = result.data.records;
+
   }
 }
 
@@ -110,27 +108,12 @@ const reset = () => {
 const addRole = () => {
   // 对话框显示出来
   dialogVisible.value = true;
-  // 清空数据
-  Object.assign(RoleParams, {
-    id: 0,
-    roleName: '',
-  });
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
-  })
 }
 
 // 更新已有的职位按钮回调
 const updateRole = (row: RoleData) => {
   // 显示对话框
   dialogVisible.value = true;
-  // 存储已有的职位 -- 带有 ID 的 
-  Object.assign(RoleParams, row);
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
-  })
 }
 
 // 自定义经验规则回调
@@ -147,25 +130,6 @@ const rules = {
   roleName: [
     { required: true, trigger: 'blue', validator: validatorRoleName }
   ]
-}
-
-// 确定按钮的回调
-const save = async () => {
-  // 表单校验结果，结果通过再发请求，结果没有通过不应该再发请求
-  await form.value.validate();
-  // 添加职位 | 更新职位的请求
-  let result: any = await reqAddOrUpdateRole(RoleParams);
-  if (result.code == 200) {
-    // 提示文字
-    ElMessage({
-      type: 'success',
-      message: RoleParams.id ? '更新成功' : '添加成功'
-    });
-    // 对话框显示
-    dialogVisible.value = false;
-    // 再次获取全部已有的职位
-    getHasRole(RoleParams.id ? pageNo.value : 1);
-  }
 }
 
 </script>

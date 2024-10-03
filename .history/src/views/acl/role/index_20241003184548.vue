@@ -127,10 +127,6 @@ const updateRole = (row: RoleData) => {
   dialogVisible.value = true;
   // 存储已有的职位 -- 带有 ID 的 
   Object.assign(RoleParams, row);
-  // 清空上一次表单经验错误结果
-  nextTick(() => {
-    form.value.clearValidate('roleName');
-  })
 }
 
 // 自定义经验规则回调

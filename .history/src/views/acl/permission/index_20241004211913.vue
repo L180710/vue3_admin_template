@@ -1,7 +1,6 @@
 <template>
-  <div>
-    权限管理
-  </div>
+  <el-table row-key="id" default-expand-all>
+  </el-table>
 </template>
 
 <script setup lang='ts'>

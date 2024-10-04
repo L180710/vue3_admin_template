@@ -6,10 +6,9 @@
     <el-table-column label="操作">
       <!-- row: 即为已有菜单对象 | 按钮的对象数据 -->
       <template #="{ row, $index }">
-        <el-button type="primary" size="small" :disabled="row.level == 4 ? true : false">{{ row.level == 1 ? '添加功能' :
-          '添加菜单' }}</el-button>
-        <el-button type="primary" size="small" :disabled="row.level == 1 ? true : false">编辑</el-button>
-        <el-button type="primary" size="small" :disabled="row.level == 1 ? true : false">删除</el-button>
+        <el-button type="primary" size="small">添加菜单</el-button>
+        <el-button type="primary" size="small">编辑</el-button>
+        <el-button type="primary" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

@@ -71,7 +71,7 @@ import { ref, onMounted, reactive, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 // 请求方法
 import {
-  reqAllRoleList, reqAddOrUpdateRole, reqAllMenuList, reqSetPermission, reqRemoveRole
+  reqAllRoleList, reqAddOrUpdateRole, reqAllMenuList, reqSetPermission
 } from '@/api/acl/role';
 import type { RoleResponseData, Records, RoleData, MenuList } from '@/api/acl/role/type';
 // 引入骨架仓库
@@ -254,17 +254,6 @@ const handler = async () => {
     window.location.reload();
   }
 }
-
-// 删除已有的职位
-const removeRole = async (id: number) => {
-  let result: any = await reqRemoveRole(id);
-  if (result.code == 200) {
-    // 提示信息
-    ElMessage({ type: 'success', message: '删除成功' });
-    getHasRole(allRole.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  }
-}
-
 
 
 </script>

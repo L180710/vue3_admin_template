@@ -255,17 +255,6 @@ const handler = async () => {
   }
 }
 
-// 删除已有的职位
-const removeRole = async (id: number) => {
-  let result: any = await reqRemoveRole(id);
-  if (result.code == 200) {
-    // 提示信息
-    ElMessage({ type: 'success', message: '删除成功' });
-    getHasRole(allRole.value.length > 1 ? pageNo.value : pageNo.value - 1);
-  }
-}
-
-
 
 </script>
 

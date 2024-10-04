@@ -261,7 +261,7 @@ const removeRole = async (id: number) => {
   if (result.code == 200) {
     // 提示信息
     ElMessage({ type: 'success', message: '删除成功' });
-    getHasRole(allRole.value.length > 1 ? pageNo.value : pageNo.value - 1);
+    getHasRole(allRole.value.length > 1 ? pageNo.value: pageNo.value - 1)
   }
 }
 

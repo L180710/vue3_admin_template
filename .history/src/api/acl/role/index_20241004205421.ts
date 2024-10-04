@@ -43,5 +43,5 @@ export const reqSetPermission = (roleId: number, permissionId: number[]) =>
   )
 
 // 删除已有的职位
-export const reqRemoveRole = (roleId: number) =>
-  request.delete<any, any>(API.REMOVEROLE_URL + roleId)
+export const reqRemoveRole = (roldId: number) =>
+  request.delete(API.REMOVEROLE_URL + roleId)

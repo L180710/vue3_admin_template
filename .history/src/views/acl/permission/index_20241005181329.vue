@@ -16,7 +16,7 @@
     </el-table-column>
   </el-table>
   <!-- 对话框组件：添加或更新已有菜单的数据结构 -->
-  <el-dialog v-model="dialogVisible" :title="menuData.id ? '更新菜单' : '添加菜单'">
+  <el-dialog v-model="dialogVisible" :title="添加菜单">
     <!-- 表单组件：收集新增已有的菜单数据 -->
     <el-form>
       <el-form-item label="名称">
@@ -71,7 +71,6 @@ const getHasPermission = async () => {
 const addPermission = (row: Permission) => {
   // 清空数据
   Object.assign(menuData, {
-    id: 0,
     code: '',
     level: 0,
     name: '',

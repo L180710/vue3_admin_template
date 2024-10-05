@@ -15,10 +15,10 @@ export const reqAllPermission = () =>
   request.get<any, PermissionResponseData>(API.ALLPERMISSION_URL)
 
 // 添加与更新菜单的方法
-export const reqAddOrUpdateMenu = (data: MenuParams) => {
+export const reqAddOrUpdateMenu = (data: any) => {
   if (data.id) {
-    return request.put<any, any>(API.UPDATE_URL, data)
+    return request.put(API.UPDATE_URL, data)
   } else {
-    return request.post<any, any>(API.ADDMENU_URL, data)
+    return request.post(API.ADDMENU_URL, data)
   }
 }

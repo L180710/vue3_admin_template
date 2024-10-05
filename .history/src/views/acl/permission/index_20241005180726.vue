@@ -16,7 +16,7 @@
     </el-table-column>
   </el-table>
   <!-- 对话框组件：添加或更新已有菜单的数据结构 -->
-  <el-dialog v-model="dialogVisible" :title="menuData.id ? '更新菜单' : '添加菜单'">
+  <el-dialog v-model="dialogVisible" title="添加菜单">
     <!-- 表单组件：收集新增已有的菜单数据 -->
     <el-form>
       <el-form-item label="名称">
@@ -38,10 +38,9 @@
 <script setup lang='ts'>
 import { ref, onMounted, reactive } from 'vue';
 // 引入获取菜单请求 api
-import { reqAllPermission, reqAddOrUpdateMenu } from '@/api/acl/menu';
+import { reqAllPermission } from '@/api/acl/menu';
 // 引入 ts 类型
 import type { PermissionResponseData, PermissionList, Permission, MenuParams } from '@/api/acl/menu/type';
-import { ElMessage } from 'element-plus';
 // 控制对话框显示与隐藏
 let dialogVisible = ref<boolean>(false);
 // 存储菜单的数据
@@ -69,14 +68,6 @@ const getHasPermission = async () => {
 
 // 添加菜单按钮的回调
 const addPermission = (row: Permission) => {
-  // 清空数据
-  Object.assign(menuData, {
-    id: 0,
-    code: '',
-    level: 0,
-    name: '',
-    pid: 0
-  });
   // 对话框显示出来
   dialogVisible.value = true;
   // 收集新增的菜单 level 数值
@@ -88,26 +79,6 @@ const addPermission = (row: Permission) => {
 // 编辑已有的菜单
 const updatePermission = (row: Permission) => {
   dialogVisible.value = true;
-  // 点击修改按钮：收集已有菜单数据进行更新
-  Object.assign(menuData, row);
-}
-
-// 确定按钮的回调
-const save = async () => {
-  // 发请求：新增子菜单 | 更新某一个已有的菜单数据
-  let result: any = await reqAddOrUpdateMenu(menuData);
-  if (result.code == 200) {
-    // 对话框隐藏
-    dialogVisible.value = false;
-    // 提示信息
-    ElMessage({
-      type: 'success',
-      message: menuData.id ? '更新成功' : '添加成功'
-    });
-    // 再次获取全部最新的数据
-    getHasPermission();
-  }
-
 }
 </script>
 

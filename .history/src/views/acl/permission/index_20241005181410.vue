@@ -71,7 +71,6 @@ const getHasPermission = async () => {
 const addPermission = (row: Permission) => {
   // 清空数据
   Object.assign(menuData, {
-    id: 0,
     code: '',
     level: 0,
     name: '',

@@ -19,6 +19,6 @@ export const reqAddOrUpdateMenu = (data: MenuParams) => {
   if (data.id) {
     return request.put<any, any>(API.UPDATE_URL, data)
   } else {
-    return request.post<any, any>(API.ADDMENU_URL, data)
+    return request.post(API.ADDMENU_URL, data)
   }
 }

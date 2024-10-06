@@ -6,8 +6,7 @@
     <!-- 表单元素 -->
     <el-form>
       <el-form-item label="主题颜色">
-        <el-color-picker :teleported="false" @change="setColor" v-model="color" size="small" show-alpha
-          :predefine="predefineColors"></el-color-picker>
+        <el-color-picker v-model="color" size="small" show-alpha :predefine="predefineColors"></el-color-picker>
       </el-form-item>
       <el-form-item label="暗黑模式">
         <el-switch @change="changeDark" v-model="dark" size="small"></el-switch>
@@ -106,13 +105,6 @@ const changeDark = () => {
   let html = document.documentElement;
   // 判断 HTML 标签是否有类 dark
   dark.value ? html.className = 'dark' : html.className = '';
-}
-
-// 主题颜色的设置
-const setColor = () => {
-  // 通知 js 修改根节点样式对象的属性与属性值
-  const html = document.documentElement;
-  html.style.setProperty('--el-color-primary', color.value);
 }
 </script>
 

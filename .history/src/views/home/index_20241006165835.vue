@@ -8,7 +8,7 @@
       </div>
     </div>
   </el-card>
-  <div class="bottoms">
+  <div class="bottom">
     <svg-icon name="welcome" width="500px" height="500px"></svg-icon>
   </div>
 </template>
@@ -47,9 +47,8 @@ let userStore = useUserStore();
   }
 }
 
-.bottoms {
+.bottom {
   display: flex;
-  margin-top: 10px;
   justify-content: center;
 }
 </style>

@@ -112,7 +112,7 @@ const changeDark = () => {
 const setColor = () => {
   // 通知 js 修改根节点样式对象的属性与属性值
   const html = document.documentElement;
-  html.style.setProperty('--el-color-primary', color.value);
+  html.style.setProperty('--el-color-primary');
 }
 </script>
 

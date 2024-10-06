@@ -49,7 +49,6 @@ let userStore = useUserStore();
 
 .bottoms {
   display: flex;
-  margin-top: 10px;
   justify-content: center;
 }
 </style>

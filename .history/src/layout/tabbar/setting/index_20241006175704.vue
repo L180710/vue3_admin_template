@@ -6,11 +6,10 @@
     <!-- 表单元素 -->
     <el-form>
       <el-form-item label="主题颜色">
-        <el-color-picker :teleported="false" @change="setColor" v-model="color" size="small" show-alpha
-          :predefine="predefineColors"></el-color-picker>
+        <el-color-picker v-model="color" show-alpha :predefine="predefineColors"></el-color-picker>
       </el-form-item>
       <el-form-item label="暗黑模式">
-        <el-switch @change="changeDark" v-model="dark" size="small"></el-switch>
+
       </el-form-item>
     </el-form>
     <template #reference>
@@ -39,7 +38,6 @@ export default {
 }
 </script>
 <script setup lang='ts'>
-import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 // 获取用户相关小仓库
 import useUserStore from '@/store/modules/user';
@@ -51,8 +49,26 @@ let userStore = useUserStore();
 let $router = useRouter();
 // 获取路由对象
 let $route = useRoute();
-// 收集开关的数据
-let dark = ref<string>(false);
+import { ref } from 'vue'
+
+const color = ref('rgba(255, 69, 0, 0.68)')
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+  'rgba(255, 69, 0, 0.68)',
+  'rgb(255, 120, 0)',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577',
+])
+
 
 
 // 刷新按钮点击回调
@@ -79,40 +95,6 @@ const logout = async () => {
   // 第三件事：跳转到登录页面
   await userStore.userLogout();
   $router.push({ path: '/login', query: { redirect: $route.path } });
-}
-
-// 颜色组件
-const color = ref('rgba(255, 69, 0, 0.68)')
-const predefineColors = ref([
-  '#ff4500',
-  '#ff8c00',
-  '#ffd700',
-  '#90ee90',
-  '#00ced1',
-  '#1e90ff',
-  '#c71585',
-  'rgba(255, 69, 0, 0.68)',
-  'rgb(255, 120, 0)',
-  'hsv(51, 100, 98)',
-  'hsva(120, 40, 94, 0.5)',
-  'hsl(181, 100%, 37%)',
-  'hsla(209, 100%, 56%, 0.73)',
-  '#c7158577',
-]);
-
-// switch 开关的change事件进行暗黑模式的切换
-const changeDark = () => {
-  // 获取HTML根节点
-  let html = document.documentElement;
-  // 判断 HTML 标签是否有类 dark
-  dark.value ? html.className = 'dark' : html.className = '';
-}
-
-// 主题颜色的设置
-const setColor = () => {
-  // 通知 js 修改根节点样式对象的属性与属性值
-  const html = document.documentElement;
-  html.style.setProperty('--el-color-primary', color.value);
 }
 </script>
 

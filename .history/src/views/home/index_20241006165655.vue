@@ -8,9 +8,7 @@
       </div>
     </div>
   </el-card>
-  <div class="bottoms">
-    <svg-icon name="welcome" width="500px" height="500px"></svg-icon>
-  </div>
+  <svg-icon name="welcome"></svg-icon>
 </template>
 
 <script setup lang='ts'>
@@ -39,17 +37,6 @@ let userStore = useUserStore();
       font-size: 30px;
       font-weight: 900;
     }
-
-    .subtitle {
-      font-style: italic;
-      color: skyblue;
-    }
   }
-}
-
-.bottoms {
-  display: flex;
-  margin-top: 10px;
-  justify-content: center;
 }
 </style>

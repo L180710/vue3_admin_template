@@ -116,10 +116,6 @@ const save = async () => {
 // 删除按钮回调
 const removeMenu = async (id: number) => {
   let result = await reqRemoveMenu(id);
-  if (result.code == 200) {
-    ElMessage({ type: 'success', message: '删除成功' })
-    getHasPermission();
-  }
 }
 </script>
 

@@ -11,7 +11,7 @@
             '添加菜单' }}</el-button>
         <el-button type="primary" size="small" @click="updatePermission(row)"
           :disabled="row.level == 1 ? true : false">编辑</el-button>
-        <el-popconfirm :title="`您确定要删除${row.name}吗？`" width="260px" @confirm="removeMenu(row.id)">
+        <el-popconfirm title="Are you sure to delete this?">
           <template #reference>
             <el-button type="primary" size="small" :disabled="row.level == 1 ? true : false">删除</el-button>
           </template>
@@ -111,15 +111,7 @@ const save = async () => {
     // 再次获取全部最新的数据
     getHasPermission();
   }
-}
 
-// 删除按钮回调
-const removeMenu = async (id: number) => {
-  let result = await reqRemoveMenu(id);
-  if (result.code == 200) {
-    ElMessage({ type: 'success', message: '删除成功' })
-    getHasPermission();
-  }
 }
 </script>
 

@@ -2,9 +2,7 @@
   <div class="container">
     <!-- 数据大屏展示内容区域 -->
     <div class="screen" ref="screen">
-      <div class="top">
-        <top />
-      </div>
+      <div class="top">部</div>
       <div class="bottom">
         <div class="left">左侧</div>
         <div class="left">中间</div>
@@ -52,11 +50,13 @@ function getScale(w = 1920, h = 1080) {
     top: 50%;
     width: 1920px;
     height: 1080px;
+    background: red;
     transform-origin: left top;
 
     .top {
       width: 100%;
       height: 40px;
+      background: cyan;
     }
 
     .bottom {

@@ -3,15 +3,15 @@
     <!-- 数据大屏展示内容区域 -->
     <div class="screen" ref="screen">
       <div class="top">
-        <top />
-      </div>
-      <div class="bottom">
-        <div class="left">左侧</div>
-        <div class="left">中间</div>
-        <div class="left">右侧</div>
+        <Top />
+        < /div>
+          <div class="bottom">
+            <div class="left">左侧</div>
+            <div class="left">中间</div>
+            <div class="left">右侧</div>
+          </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup lang='ts'>
@@ -52,11 +52,13 @@ function getScale(w = 1920, h = 1080) {
     top: 50%;
     width: 1920px;
     height: 1080px;
+    background: red;
     transform-origin: left top;
 
     .top {
       width: 100%;
       height: 40px;
+      background: cyan;
     }
 
     .bottom {

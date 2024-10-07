@@ -3,8 +3,7 @@ export interface ResponseData {
   message: string
   ok: boolean
 }
-
-// 职位类型
+//职位数据类型
 export interface RoleData {
   id?: number
   createTime?: string
@@ -13,9 +12,9 @@ export interface RoleData {
   remark?: null
 }
 
-// 全部职位的数据 ts 类型
+//全部职位的数组的ts类型
 export type Records = RoleData[]
-// 全部职位数据的相应 ts 类型
+//全部职位数据的相应的ts类型
 export interface RoleResponseData extends ResponseData {
   data: {
     records: Records
@@ -25,15 +24,15 @@ export interface RoleResponseData extends ResponseData {
     orders: []
     optimizeCountSql: boolean
     hitCount: boolean
-    coundId: null
+    countId: null
     maxLimit: null
     searchCount: boolean
     pages: number
   }
 }
 
-// 菜单与按钮数据 ts 类型
-export interface MenuData {
+//菜单与按钮数据的ts类型
+export interface MunuData {
   id: number
   createTime: string
   updateTime: string
@@ -47,10 +46,9 @@ export interface MenuData {
   children?: MenuList
   select: boolean
 }
+export type MenuList = MunuData[]
 
-export type MenuList = MenuData[]
-
-// 菜单权限与按钮权限数据 ts 类型
+//菜单权限与按钮权限数据的ts类型
 export interface MenuResponseData extends ResponseData {
   data: MenuList
 }
